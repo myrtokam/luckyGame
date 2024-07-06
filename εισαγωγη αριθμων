@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq.Expressions;
+
+namespace askiseisq
+{
+    internal class KINOLIKE
+    {
+
+
+        public static void numbersInput()
+        {
+            Console.WriteLine("Welcome at the LuckyNumbers Game...!!!");
+            Console.WriteLine("Instructions:");
+            Console.WriteLine("You can choose 10 numbers between 1 and 100 for the standard lottery draw.");
+            Console.WriteLine("After choosing your numbers, choose another two numbers between 1 to 50 for the bonus lottery draw.");
+
+            Console.WriteLine(" ");
+
+
+            Console.WriteLine("Give the numbers of your choice for the standard lottery draw:");
+            List<int> classicLottery = new List<int>();
+
+            for (int i = 0; i <= 10 - 1; i++)
+            {
+                int userInputClassic = Convert.ToInt32(Console.ReadLine()); ;
+
+
+                if (userInputClassic > 0 && userInputClassic <= 100)
+                {
+
+
+                    if (userInputClassic <= 0 && userInputClassic <= 100)
+                    {
+
+                        Console.WriteLine("Thank you for your inputs.");
+                    }
+
+                    if (userInputClassic >= 101)
+                    {
+
+                        Console.WriteLine("give a number through 0 to 100.");
+                    }
+
+
+
+                    Console.WriteLine(" ");
+
+                    Console.WriteLine("Give the numbers of your choice for the bonus lottery draw:");
+                    int userInputBonus = Convert.ToInt32(Console.ReadLine());
+
+
+
+                    Console.WriteLine("Thank you for your inputs. Press any key to exit.");
+                    Console.ReadKey();
+                }
+            }
+        }
+
+        public static void exeptionsForInputs(int userInputClassic)
+        {
+
+            string input = Convert.ToString(Console.ReadLine());
+            if (int.TryParse(input, out userInputClassic))
+            {
+                Console.WriteLine("give a number");
+            }
+        }
+
+
+        static void Main(string[] args)
+        {
+
+
+
+            Console.WriteLine("Give the numbers of your choice for the bonus lottery draw:");
+
+            KINOLIKE.numbersInput();
+
+
+
+            Console.WriteLine("Thank you for your inputs. Press any key to exit.");
+            Console.ReadKey();
+
+        }
+
+    }
+}
+
