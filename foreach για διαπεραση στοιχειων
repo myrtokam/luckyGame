@@ -1,0 +1,9 @@
+ foreach (int numbers in classicLottery)
+ {
+     Console.WriteLine(numbers);
+ }
+
+ if (classicLottery.Count != 10)
+ {
+     Console.WriteLine("You entered incorrect values. Please restart the program and enter 10 valid numbers.");
+ }
