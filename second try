@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace KinoGame
 {
@@ -86,7 +89,7 @@ namespace KinoGame
                 }
             }
 
-            Console.WriteLine("\nThe bonus numbers you chose are:");
+            Console.WriteLine("\n the bonus numbers you chose are:");
             foreach (int number in bonusLottery)
             {
                 Console.Write(number + " ");
@@ -94,14 +97,102 @@ namespace KinoGame
             Console.WriteLine();
         }
 
+        public static void LotteryDrawExecution()
+        {
+            Console.WriteLine("\n we performed the the classic lottery draw and the results are: \n");
+
+
+
+           List<int> list = new List<int>();
+            Random random = new Random();
+            list.Add(random.Next());
+
+            for (int i = 0; i < 10; i++)
+            {
+               
+                int lotteryNumber = random.Next(1, 100);
+                if(list.Contains(lotteryNumber))
+                {
+                    random.Next();
+                }
+                Console.WriteLine(lotteryNumber);
+
+            }
+           
+
+         }
+
+        
+        public static void BonusLotteryDrawExecution()
+
+        {
+            Console.WriteLine("\n we performed the bonus lottery draw  and the results are: \n");
+
+
+
+           List<int> list = new List<int>();
+            Random random = new Random();
+            list.Add(random.Next());
+
+            for (int i = 0; i < 2; i++)
+            {
+
+                int bonusLotteryNumber = random.Next(1, 50);
+                if (list.Contains(bonusLotteryNumber))
+
+                {
+                    random.Next();
+                }
+                Console.WriteLine(bonusLotteryNumber);
+
+            }
+
+        }
+
+        public static void winningMessageClassicLottery()
+        {
+            if(LotteryDrawExecution == NumbersInput)
+            {
+                Console.WriteLine("You won the classic lottery. You have maching numbers");
+            }
+                if (LotteryDrawExecution != NumbersInput)
+                {
+                    Console.WriteLine("You didh't won the classic lottery. You don't  have maching numbers");
+                }
+            
+        }
+
+        public static void winningMessageBonusLottery()
+        {
+            if (BonusLottery == BonusLotteryDrawExecution)
+            {
+                Console.WriteLine(" \n You won the Bonus lottery. You have maching numbers \n");
+            }
+
+                if (BonusLottery != BonusLotteryDrawExecution)
+                {
+                Console.WriteLine("\n You didh't won the Bonus lottery. You don't  have maching numbers \n");
+                }
+            
+        }
+
+
+
         static void Main(string[] args)
         {
             NumbersInput();
             BonusLottery();
+
+            LotteryDrawExecution();
+            BonusLotteryDrawExecution();
+
+            winningMessageClassicLottery();
+            winningMessageBonusLottery();
+
+
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
         }
     }
 }
-
