@@ -1,105 +1,107 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KinoGame
 {
     public class KinoGame
     {
-
-        public static void numbersInput()
+        public static void NumbersInput()
         {
-            Console.WriteLine("Welcome at the LuckyNumbers Game...!!!");
+            Console.WriteLine("Welcome to the LuckyNumbers Game...!!!");
             Console.WriteLine("Instructions:");
             Console.WriteLine("You can choose 10 numbers between 1 and 100 for the standard lottery draw.");
-            Console.WriteLine("After choosing your numbers, choose another two numbers between 1 to 50 for the bonus lottery draw.");
-
-            Console.WriteLine(" ");
-
+            Console.WriteLine("After choosing your numbers, choose another two numbers between 1 and 50 for the bonus lottery draw.");
+            Console.WriteLine();
 
             Console.WriteLine("Give the numbers of your choice for the standard lottery draw:");
 
-
             List<int> classicLottery = new List<int>();
 
-            for (int i = 0; i <= 9; i++)
+            for (int i = 0; i < 10; i++)
             {
-                int userInputClassic = Convert.ToInt32(Console.ReadLine());
-
-                if (classicLottery.Contains(userInputClassic))
+                int userInputClassic;
+                while (true)
                 {
-                    Console.WriteLine("The number that you gave already exists. Please give another number between 1 and 100.");
-                    i--; // Decrease i to repeat the loop for the current index
+                    if (int.TryParse(Console.ReadLine(), out userInputClassic) && userInputClassic > 0 && userInputClassic <= 100 && !classicLottery.Contains(userInputClassic))
+                    {
+                        classicLottery.Add(userInputClassic);
+                        break;
+                    }
+                    else
+                    {
+                        if (userInputClassic < 1 || userInputClassic > 100)
+                        {
+                            Console.WriteLine("Please give a number between 1 and 100.");
+                        }
+                        else if (classicLottery.Contains(userInputClassic))
+                        {
+                            Console.WriteLine("The number already exists. Please give another number.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Please give a valid number between 1 and 100.");
+                        }
+                    }
                 }
-                else
-                {
-                    classicLottery.Add(userInputClassic);
-                }
-                if (userInputClassic > 0 && userInputClassic <= 100)
-                {
-                    classicLottery.Add(userInputClassic);
-
-                }
-                else if (userInputClassic >= 101)
-                {
-
-                    Console.WriteLine("give a number through 0 to 100.");
-                    i--;
-                }
-
-
-
-
             }
-            Console.WriteLine("");
-            Console.WriteLine("the numbers you choose are:");
 
-
-           
+            Console.WriteLine("\nThe numbers you chose are:");
+            foreach (int number in classicLottery)
+            {
+                Console.Write(number + " ");
+            }
+            Console.WriteLine();
         }
 
-
-
-
-            public static void BonusLottery()
+        public static void BonusLottery()
         {
-            Console.WriteLine(" ");
-            Console.WriteLine("Give the numbers of your choice for the bonus lottery draw:");
-            List<int> BonusLottery = new List<int>();
+            Console.WriteLine("\nGive the numbers of your choice for the bonus lottery draw:");
+            List<int> bonusLottery = new List<int>();
+
             for (int i = 0; i < 2; i++)
             {
-                int userInputBonus = Convert.ToInt32(Console.ReadLine());
-                if (userInputBonus > 0 && userInputBonus < 50)
+                int userInputBonus;
+                while (true)
                 {
-                    BonusLottery.Add(userInputBonus);
-                    Console.WriteLine("Thank you for your input");
+                    if (int.TryParse(Console.ReadLine(), out userInputBonus) && userInputBonus > 0 && userInputBonus <= 50 && !bonusLottery.Contains(userInputBonus))
+                    {
+                        bonusLottery.Add(userInputBonus);
+                        break;
+                    }
+                    else
+                    {
+                        if (userInputBonus < 1 || userInputBonus > 50)
+                        {
+                            Console.WriteLine("Please give a number between 1 and 50.");
+                        }
+                        else if (bonusLottery.Contains(userInputBonus))
+                        {
+                            Console.WriteLine("The number already exists. Please give another number.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Please give a valid number between 1 and 50.");
+                        }
+                    }
                 }
-                Console.WriteLine("Give a number through 1 to 50.");
-                i--;
-
             }
+
+            Console.WriteLine("\nThe bonus numbers you chose are:");
+            foreach (int number in bonusLottery)
+            {
+                Console.Write(number + " ");
+            }
+            Console.WriteLine();
         }
 
-
-    
         static void Main(string[] args)
         {
-
-
-
-          
-
-            numbersInput();
+            NumbersInput();
             BonusLottery();
 
-
-          //  Console.WriteLine("to many not valid trys. Press any key to exit.");
+            Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
-
         }
-
     }
 }
 
