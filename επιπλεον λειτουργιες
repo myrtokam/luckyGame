@@ -1,0 +1,160 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO; // Προσθήκη για λειτουργίες αρχείων
+
+namespace KinoGame
+{
+    // Κλάση για την διαχείριση του λογαριασμού χρήστη
+    public class UserAccount
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public int Age { get; set; }
+        public string ID { get; set; }
+        public string PaymentMethod { get; set; }
+        public string BankAccount { get; set; }
+
+        public decimal Balance { get; set; } // Υπόλοιπο χρημάτων του χρήστη
+
+        // Κατασκευαστής για την αρχικοποίηση του λογαριασμού χρήστη
+        public UserAccount(string name, string email, int age, string id, string paymentMethod, string bankAccount)
+        {
+            Name = name;
+            Email = email;
+            Age = age;
+            ID = id;
+            PaymentMethod = paymentMethod;
+            BankAccount = bankAccount;
+            Balance = 0;
+        }
+
+        // Μέθοδος για την προσθήκη χρημάτων στον λογαριασμό
+        public void AddFunds(decimal amount)
+        {
+            Balance += amount;
+            Console.WriteLine($"Προστέθηκαν {amount:C} στο υπόλοιπό σας. Τρέχον υπόλοιπο: {Balance:C}");
+        }
+
+        // Μέθοδος για την αφαίρεση χρημάτων από τον λογαριασμό
+        public bool DeductFunds(decimal amount)
+        {
+            if (Balance >= amount)
+            {
+                Balance -= amount;
+                return true;
+            }
+            Console.WriteLine("Ανεπαρκές υπόλοιπο. Παρακαλώ προσθέστε περισσότερα χρήματα.");
+            return false;
+        }
+    }
+
+    public class KinoGame
+    {
+        private static UserAccount user;
+        private static List<string> gameHistory = new List<string>(); // Ιστορικό παιχνιδιού
+
+        // Μέθοδος για την εγγραφή του χρήστη
+        public static void RegisterUser()
+        {
+            Console.WriteLine("Καλώς ήρθατε στο παιχνίδι LuckyNumbers...!!!");
+            Console.Write("Εισάγετε το όνομά σας: ");
+            string name = Console.ReadLine();
+            Console.Write("Εισάγετε το email σας: ");
+            string email = Console.ReadLine();
+            Console.Write("Εισάγετε την ηλικία σας: ");
+            int age = int.Parse(Console.ReadLine());
+            Console.Write("Εισάγετε το ID σας: ");
+            string id = Console.ReadLine();
+            Console.Write("Εισάγετε τον τρόπο πληρωμής σας: ");
+            string paymentMethod = Console.ReadLine();
+            Console.Write("Εισάγετε τον τραπεζικό σας λογαριασμό: ");
+            string bankAccount = Console.ReadLine();
+
+            user = new UserAccount(name, email, age, id, paymentMethod, bankAccount);
+        }
+
+        // Μέθοδος για την προσθήκη χρημάτων
+        public static void AddFunds()
+        {
+            Console.Write("Εισάγετε το ποσό που θέλετε να προσθέσετε: ");
+            decimal amount = decimal.Parse(Console.ReadLine());
+            user.AddFunds(amount);
+        }
+
+        // Μέθοδος για την εισαγωγή αριθμών κλήρωσης
+        public static void NumbersInput()
+        {
+            if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+
+            Console.WriteLine("Οδηγίες:");
+            Console.WriteLine("Μπορείτε να επιλέξετε 10 αριθμούς μεταξύ 1 και 100 για την τυπική κλήρωση.");
+            Console.WriteLine("Μετά την επιλογή των αριθμών σας, επιλέξτε άλλους δύο αριθμούς μεταξύ 1 και 50 για την κλήρωση bonus.");
+            Console.WriteLine();
+
+            Console.WriteLine("Δώστε τους αριθμούς της επιλογής σας για την τυπική κλήρωση:");
+
+            List<int> classicLottery = new List<int>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                int userInputClassic;
+                while (true)
+                {
+                    if (int.TryParse(Console.ReadLine(), out userInputClassic) && userInputClassic > 0 && userInputClassic <= 100 && !classicLottery.Contains(userInputClassic))
+                    {
+                        classicLottery.Add(userInputClassic);
+                        break;
+                    }
+                    else
+                    {
+                        if (userInputClassic < 1 || userInputClassic > 100)
+                        {
+                            Console.WriteLine("Παρακαλώ δώστε έναν αριθμό μεταξύ 1 και 100.");
+                        }
+                        else if (classicLottery.Contains(userInputClassic))
+                        {
+                            Console.WriteLine("Ο αριθμός υπάρχει ήδη. Παρακαλώ δώστε έναν άλλο αριθμό.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Μη έγκυρη εισαγωγή. Παρακαλώ δώστε έναν έγκυρο αριθμό μεταξύ 1 και 100.");
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine("\nΟι αριθμοί που επιλέξατε είναι:");
+            foreach (int number in classicLottery)
+            {
+                Console.Write(number + " ");
+            }
+            Console.WriteLine();
+            gameHistory.Add($"Αριθμοί τυπικής κλήρωσης: {string.Join(", ", classicLottery)}");
+        }
+
+        // Μέθοδος για την εισαγωγή αριθμών κλήρωσης bonus
+        public static void BonusLottery()
+        {
+            if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+
+            Console.WriteLine("\nΔώστε τους αριθμούς της επιλογής σας για την κλήρωση bonus:");
+            List<int> bonusLottery = new List<int>();
+
+            for (int i = 0; i < 2; i++)
+            {
+                int userInputBonus;
+                while (true)
+                {
+                    if (int.TryParse(Console.ReadLine(), out userInputBonus) && userInputBonus > 0 && userInputBonus <= 50 && !bonusLottery.Contains(userInputBonus))
+                    {
+                        bonusLottery.Add(userInputBonus);
+                        break;
+                    }
+                    else
+                    {
+                        if (userInputBonus < 1 || userInputBonus > 50)
+                        {
+ 
