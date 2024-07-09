@@ -5,18 +5,990 @@
     Προσωπικά στοιχεία: Όνομα, email, ηλικία, ID.
     Οικονομικά στοιχεία: Τρόπος πληρωμής, τραπεζικός λογαριασμός.
 
+Βήμα 1: Δημιουργία της Κλάσης UserAccount
+
+Η κλάση UserAccount θα περιέχει όλες τις απαραίτητες πληροφορίες για τον χρήστη, συμπεριλαμβανομένων των προσωπικών και οικονομικών στοιχείων.
+
+using System;
+
+namespace KinoGame
+{
+    public class UserAccount
+    {
+        // Προσωπικά στοιχεία
+        public string Name { get; set; } // Το όνομα του χρήστη
+        public string Email { get; set; } // Το email του χρήστη
+        public int Age { get; set; } // Η ηλικία του χρήστη
+        public string ID { get; set; } // Η ταυτότητα του χρήστη
+
+        // Οικονομικά στοιχεία
+        public string PaymentMethod { get; set; } // Ο τρόπος πληρωμής του χρήστη
+        public string BankAccount { get; set; } // Ο τραπεζικός λογαριασμός του χρήστη
+
+        // Υπόλοιπο χρημάτων του χρήστη
+        public decimal Balance { get; set; }
+
+        // Κατασκευαστής για την αρχικοποίηση του λογαριασμού χρήστη
+        public UserAccount(string name, string email, int age, string id, string paymentMethod, string bankAccount)
+        {
+            Name = name;
+            Email = email;
+            Age = age;
+            ID = id;
+            PaymentMethod = paymentMethod;
+            BankAccount = bankAccount;
+            Balance = 0;
+        }
+
+        // Μέθοδος για την προσθήκη χρημάτων στον λογαριασμό
+        public void AddFunds(decimal amount)
+        {
+            Balance += amount;
+            Console.WriteLine($"Προστέθηκαν {amount:C} στο υπόλοιπό σας. Τρέχον υπόλοιπο: {Balance:C}");
+        }
+
+        // Μέθοδος για την αφαίρεση χρημάτων από τον λογαριασμό
+        public bool DeductFunds(decimal amount)
+        {
+            if (Balance >= amount)
+            {
+                Balance -= amount;
+                return true;
+            }
+            Console.WriteLine("Ανεπαρκές υπόλοιπο. Παρακαλώ προσθέστε περισσότερα χρήματα.");
+            return false;
+        }
+    }
+}
+
+Βήμα 2: Μέθοδος Εγγραφής Χρήστη
+
+
+Η μέθοδος RegisterUser θα συλλέγει τα στοιχεία του χρήστη από την κονσόλα και θα δημιουργεί ένα νέο αντικείμενο UserAccount.
+
+
+using System;
+
+namespace KinoGame
+{
+    public class KinoGame
+    {
+        private static UserAccount user;
+
+        // Μέθοδος για την εγγραφή του χρήστη
+        public static void RegisterUser()
+        {
+            Console.WriteLine("Καλώς ήρθατε στο παιχνίδι LuckyNumbers...!!!");
+
+            // Συλλογή προσωπικών στοιχείων
+            Console.Write("Εισάγετε το όνομά σας: ");
+            string name = Console.ReadLine();
+            Console.Write("Εισάγετε το email σας: ");
+            string email = Console.ReadLine();
+            Console.Write("Εισάγετε την ηλικία σας: ");
+            int age = int.Parse(Console.ReadLine());
+            Console.Write("Εισάγετε το ID σας: ");
+            string id = Console.ReadLine();
+
+            // Συλλογή οικονομικών στοιχείων
+            Console.Write("Εισάγετε τον τρόπο πληρωμής σας: ");
+            string paymentMethod = Console.ReadLine();
+            Console.Write("Εισάγετε τον τραπεζικό σας λογαριασμό: ");
+            string bankAccount = Console.ReadLine();
+
+            // Δημιουργία του λογαριασμού χρήστη
+            user = new UserAccount(name, email, age, id, paymentMethod, bankAccount);
+        }
+    }
+}
+
+Επεξήγηση της Λογικής
+Προσωπικά Στοιχεία
+
+    Όνομα: Χρησιμοποιείται για την αναγνώριση του χρήστη και την εξατομίκευση της εμπειρίας του παιχνιδιού.
+    Email: Χρησιμοποιείται για επικοινωνία και ειδοποιήσεις.
+    Ηλικία: Χρησιμοποιείται για να διασφαλιστεί ότι ο χρήστης είναι σε νόμιμη ηλικία για να παίξει.
+    ID: Μοναδικός αναγνωριστικός αριθμός για τον χρήστη.
+
+Οικονομικά Στοιχεία
+
+    Τρόπος Πληρωμής: Καθορίζει τον τρόπο με τον οποίο ο χρήστης θα πραγματοποιεί πληρωμές.
+    Τραπεζικός Λογαριασμός: Χρησιμοποιείται για την επαλήθευση και την πραγματοποίηση συναλλαγών.
+
+
+
+
+
+
 2. Προσθήκη Χρημάτων (Add Funds)
 
+
 Ο χρήστης πρέπει να προσθέσει χρήματα στον λογαριασμό του για να μπορεί να παίξει. Αυτή η λειτουργία θα ελέγχει αν το ποσό που καταχωρείται είναι έγκυρο και θα προσθέτει το ποσό στο υπόλοιπο του χρήστη.
+
+
+Πρόσθετες Λειτουργίες για το Παιχνίδι
+
+Μετά την εγγραφή του χρήστη, θα προσθέσουμε λειτουργίες για να μπορεί ο χρήστης να προσθέτει χρήματα, να παίζει το παιχνίδι, και να αποθηκεύει το ιστορικό του παιχνιδιού.
+Προσθήκη Χρημάτων
+
+Μια μέθοδος για την προσθήκη χρημάτων στον λογαριασμό του χρήστη.
+
+public static void AddFunds()
+{
+    Console.Write("Εισάγετε το ποσό που θέλετε να προσθέσετε: ");
+    decimal amount = decimal.Parse(Console.ReadLine());
+    user.AddFunds(amount);
+}
+
+Ενημέρωση Παιχνιδιού
+
+Οι μέθοδοι του παιχνιδιού θα ενημερωθούν για να αφαιρούν το αντίστοιχο ποσό από το υπόλοιπο του χρήστη για κάθε συμμετοχή.
+
+csharp
+
+public static void NumbersInput()
+{
+    if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+
+    Console.WriteLine("Οδηγίες:");
+    Console.WriteLine("Μπορείτε να επιλέξετε 10 αριθμούς μεταξύ 1 και 100 για την τυπική κλήρωση.");
+    Console.WriteLine("Μετά την επιλογή των αριθμών σας, επιλέξτε άλλους δύο αριθμούς μεταξύ 1 και 50 για την κλήρωση bonus.");
+    Console.WriteLine();
+
+    Console.WriteLine("Δώστε τους αριθμούς της επιλογής σας για την τυπική κλήρωση:");
+
+    List<int> classicLottery = new List<int>();
+
+    for (int i = 0; i < 10; i++)
+    {
+        int userInputClassic;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out userInputClassic) && userInputClassic > 0 && userInputClassic <= 100 && !classicLottery.Contains(userInputClassic))
+            {
+                classicLottery.Add(userInputClassic);
+                break;
+            }
+            else
+            {
+                if (userInputClassic < 1 || userInputClassic > 100)
+                {
+                    Console.WriteLine("Παρακαλώ δώστε έναν αριθμό μεταξύ 1 και 100.");
+                }
+                else if (classicLottery.Contains(userInputClassic))
+                {
+                    Console.WriteLine("Ο αριθμός υπάρχει ήδη. Παρακαλώ δώστε έναν άλλο αριθμό.");
+                }
+                else
+                {
+                    Console.WriteLine("Μη έγκυρη εισαγωγή. Παρακαλώ δώστε έναν έγκυρο αριθμό μεταξύ 1 και 100.");
+                }
+            }
+        }
+    }
+
+    Console.WriteLine("\nΟι αριθμοί που επιλέξατε είναι:");
+    foreach (int number in classicLottery)
+    {
+        Console.Write(number + " ");
+    }
+    Console.WriteLine();
+}
+
+Αποθήκευση Ιστορικού Παιχνιδιού
+
+Μια μέθοδος για την αποθήκευση του ιστορικού παιχνιδιού σε αρχείο για μελλοντική αναφορά.
+
+
+
+public static void SaveGameHistory()
+{
+    string filePath = "game_history.txt";
+    File.WriteAllLines(filePath, gameHistory);
+    Console.WriteLine($"\nΤο ιστορικό του παιχνιδιού αποθηκεύτηκε στο {filePath}");
+}
+
+Κύρια Μέθοδος (Main)
+
+Η κύρια μέθοδος θα περιλαμβάνει την εγγραφή του χρήστη, την προσθήκη χρημάτων και την δυνατότητα του χρήστη να παίξει πολλαπλές φορές, αν έχει το απαιτούμενο υπόλοιπο.
+
+static void Main(string[] args)
+{
+    RegisterUser();
+    AddFunds();
+
+    while (true)
+    {
+        NumbersInput();
+        BonusLottery();
+        LotteryDrawExecution();
+        BonusLotteryDrawExecution();
+
+        winningMessageClassicLottery();
+        winningMessageBonusLottery();
+
+        Console.WriteLine("Θέλετε να παίξετε ξανά; (ναι/όχι)");
+        if (Console.ReadLine().ToLower() != "ναι")
+        {
+            SaveGameHistory();
+            break;
+        }
+
+        Console.WriteLine("Πατήστε οποιοδήποτε πλήκτρο για να συνεχίσετε.");
+        Console.ReadKey();
+    }
+
+    Console.WriteLine("Πατήστε οποιοδήποτε πλήκτρο για έξοδο.");
+    Console.ReadKey();
+}
+
+
+
+
 3. Διαχείριση Παιχνιδιών (Game Management)
 
+
+
+
 Ο χρήστης μπορεί να παίξει το παιχνίδι, το οποίο αφαιρεί το αντίστοιχο ποσό από το υπόλοιπό του για κάθε συμμετοχή. Οι αριθμοί που επιλέγονται και τα αποτελέσματα των κληρώσεων αποθηκεύονται για μελλοντική αναφορά.
+
+
+
+
+
+
 4. Αποθήκευση Ιστορικού Παιχνιδιού (Save Game History)
 
 Όλες οι ενέργειες του χρήστη και τα αποτελέσματα των παιχνιδιών αποθηκεύονται σε ένα αρχείο για μελλοντική αναφορά. Αυτό βοηθά τον χρήστη να παρακολουθεί τις επιτυχίες και αποτυχίες του, καθώς και τα ποσά που έχει κερδίσει ή χάσει.
+
+Η διαχείριση παιχνιδιών περιλαμβάνει τις λειτουργίες που επιτρέπουν στον χρήστη να παίξει το παιχνίδι, αφαιρώντας το αντίστοιχο ποσό από το υπόλοιπό του για κάθε συμμετοχή. Επιπλέον, οι αριθμοί που επιλέγονται και τα αποτελέσματα των κληρώσεων αποθηκεύονται για μελλοντική αναφορά.
+Βήμα 1: Μέθοδος Εισαγωγής Αριθμών για το Κλασικό Λόττο
+
+Η μέθοδος NumbersInput επιτρέπει στον χρήστη να εισάγει 10 αριθμούς για την τυπική κλήρωση και αφαιρεί το κόστος συμμετοχής από το υπόλοιπό του.
+
+csharp
+
+public static void NumbersInput()
+{
+    if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+
+    Console.WriteLine("Οδηγίες:");
+    Console.WriteLine("Μπορείτε να επιλέξετε 10 αριθμούς μεταξύ 1 και 100 για την τυπική κλήρωση.");
+    Console.WriteLine("Μετά την επιλογή των αριθμών σας, επιλέξτε άλλους δύο αριθμούς μεταξύ 1 και 50 για την κλήρωση bonus.");
+    Console.WriteLine();
+
+    Console.WriteLine("Δώστε τους αριθμούς της επιλογής σας για την τυπική κλήρωση:");
+
+    List<int> classicLottery = new List<int>();
+
+    for (int i = 0; i < 10; i++)
+    {
+        int userInputClassic;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out userInputClassic) && userInputClassic > 0 && userInputClassic <= 100 && !classicLottery.Contains(userInputClassic))
+            {
+                classicLottery.Add(userInputClassic);
+                break;
+            }
+            else
+            {
+                if (userInputClassic < 1 || userInputClassic > 100)
+                {
+                    Console.WriteLine("Παρακαλώ δώστε έναν αριθμό μεταξύ 1 και 100.");
+                }
+                else if (classicLottery.Contains(userInputClassic))
+                {
+                    Console.WriteLine("Ο αριθμός υπάρχει ήδη. Παρακαλώ δώστε έναν άλλο αριθμό.");
+                }
+                else
+                {
+                    Console.WriteLine("Μη έγκυρη εισαγωγή. Παρακαλώ δώστε έναν έγκυρο αριθμό μεταξύ 1 και 100.");
+                }
+            }
+        }
+    }
+
+    Console.WriteLine("\nΟι αριθμοί που επιλέξατε είναι:");
+    foreach (int number in classicLottery)
+    {
+        Console.Write(number + " ");
+    }
+    Console.WriteLine();
+    gameHistory.Add($"Αριθμοί τυπικής κλήρωσης: {string.Join(", ", classicLottery)}");
+}
+
+Βήμα 2: Μέθοδος Εισαγωγής Αριθμών για το Λόττο Μπόνους
+
+Η μέθοδος BonusLottery επιτρέπει στον χρήστη να εισάγει 2 αριθμούς για την κλήρωση μπόνους και αφαιρεί το κόστος συμμετοχής από το υπόλοιπό του.
+
+csharp
+
+public static void BonusLottery()
+{
+    if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+
+    Console.WriteLine("\nΔώστε τους αριθμούς της επιλογής σας για την κλήρωση bonus:");
+    List<int> bonusLottery = new List<int>();
+
+    for (int i = 0; i < 2; i++)
+    {
+        int userInputBonus;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out userInputBonus) && userInputBonus > 0 && userInputBonus <= 50 && !bonusLottery.Contains(userInputBonus))
+            {
+                bonusLottery.Add(userInputBonus);
+                break;
+            }
+            else
+            {
+                if (userInputBonus < 1 || userInputBonus > 50)
+                {
+                    Console.WriteLine("Παρακαλώ δώστε έναν αριθμό μεταξύ 1 και 50.");
+                }
+                else if (bonusLottery.Contains(userInputBonus))
+                {
+                    Console.WriteLine("Ο αριθμός υπάρχει ήδη. Παρακαλώ δώστε έναν άλλο αριθμό.");
+                }
+                else
+                {
+                    Console.WriteLine("Μη έγκυρη εισαγωγή. Παρακαλώ δώστε έναν έγκυρο αριθμό μεταξύ 1 και 50.");
+                }
+            }
+        }
+    }
+
+    Console.WriteLine("\nΟι αριθμοί μπόνους που επιλέξατε είναι:");
+    foreach (int number in bonusLottery)
+    {
+        Console.Write(number + " ");
+    }
+    Console.WriteLine();
+    gameHistory.Add($"Αριθμοί κλήρωσης μπόνους: {string.Join(", ", bonusLottery)}");
+}
+
+Βήμα 3: Εκτέλεση Κλασικής Κλήρωσης Λόττο
+
+Η μέθοδος LotteryDrawExecution εκτελεί την κλήρωση για το κλασικό λόττο και εμφανίζει τα αποτελέσματα.
+
+csharp
+
+public static void LotteryDrawExecution()
+{
+    Console.WriteLine("\nΔιενεργήθηκε η κλήρωση του τυπικού λόττο και τα αποτελέσματα είναι:\n");
+
+    List<int> drawResults = new List<int>();
+    Random random = new Random();
+
+    for (int i = 0; i < 10; i++)
+    {
+        int lotteryNumber;
+        do
+        {
+            lotteryNumber = random.Next(1, 101); // Αριθμός μεταξύ 1 και 100
+        } while (drawResults.Contains(lotteryNumber));
+
+        drawResults.Add(lotteryNumber);
+        Console.WriteLine(lotteryNumber);
+    }
+
+    gameHistory.Add($"Αποτελέσματα τυπικής κλήρωσης: {string.Join(", ", drawResults)}");
+}
+
+Βήμα 4: Εκτέλεση Κλήρωσης Μπόνους
+
+Η μέθοδος BonusLotteryDrawExecution εκτελεί την κλήρωση για το μπόνους λόττο και εμφανίζει τα αποτελέσματα.
+
+csharp
+
+public static void BonusLotteryDrawExecution()
+{
+    Console.WriteLine("\nΔιενεργήθηκε η κλήρωση μπόνους και τα αποτελέσματα είναι:\n");
+
+    List<int> drawResults = new List<int>();
+    Random random = new Random();
+
+    for (int i = 0; i < 2; i++)
+    {
+        int bonusLotteryNumber;
+        do
+        {
+            bonusLotteryNumber = random.Next(1, 51); // Αριθμός μεταξύ 1 και 50
+        } while (drawResults.Contains(bonusLotteryNumber));
+
+        drawResults.Add(bonusLotteryNumber);
+        Console.WriteLine(bonusLotteryNumber);
+    }
+
+    gameHistory.Add($"Αποτελέσματα κλήρωσης μπόνους: {string.Join(", ", drawResults)}");
+}
+
+Βήμα 5: Μηνύματα Νίκης
+
+Οι μέθοδοι winningMessageClassicLottery και winningMessageBonusLottery ελέγχουν αν ο χρήστης έχει κερδίσει στην τυπική ή την μπόνους κλήρωση και εμφανίζουν τα αντίστοιχα μηνύματα.
+
+csharp
+
+public static void winningMessageClassicLottery()
+{
+    // Υποθέτουμε ότι κάποια λογική σύγκρισης θα προστίθεται εδώ για να καθοριστεί αν ο χρήστης κέρδισε
+    Console.WriteLine("You won the classic lottery. You have matching numbers");
+}
+
+public static void winningMessageBonusLottery()
+{
+    // Υποθέτουμε ότι κάποια λογική σύγκρισης θα προστίθεται εδώ για να καθοριστεί αν ο χρήστης κέρδισε
+    Console.WriteLine("\nYou won the bonus lottery. You have matching numbers\n");
+}
+
+Βήμα 6: Αποθήκευση Ιστορικού Παιχνιδιού
+
+Η μέθοδος SaveGameHistory αποθηκεύει το ιστορικό του παιχνιδιού σε ένα αρχείο για μελλοντική αναφορά.
+
+csharp
+
+public static void SaveGameHistory()
+{
+    string filePath = "game_history.txt";
+    File.WriteAllLines(filePath, gameHistory);
+    Console.WriteLine($"\nΤο ιστορικό του παιχνιδιού αποθηκεύτηκε στο {filePath}");
+}
+
+Κύρια Μέθοδος (Main)
+
+Η κύρια μέθοδος θα περιλαμβάνει την εγγραφή του χρήστη, την προσθήκη χρημάτων και την δυνατότητα του χρήστη να παίξει πολλαπλές φορές, αν έχει το απαιτούμενο υπόλοιπο.
+static void Main(string[] args)
+{
+    RegisterUser();
+    AddFunds();
+
+    while (true)
+    {
+        NumbersInput();
+        BonusLottery();
+        LotteryDrawExecution();
+        BonusLotteryDrawExecution();
+
+        winningMessageClassicLottery();
+        winningMessageBonusLottery();
+
+        Console.WriteLine("Θέλετε να παίξετε ξανά; (ναι/όχι)");
+        if (Console.ReadLine().ToLower() != "ναι")
+        {
+            SaveGameHistory();
+            break;
+        }
+
+        Console.WriteLine("Πατήστε οποιοδήποτε πλήκτρο για να συνεχίσετε.");
+        Console.ReadKey();
+    }
+
+    Console.WriteLine("Πατήστε οποιοδήποτε πλήκτρο για έξοδο.");
+    Console.ReadKey();
+}
+
+Σύνοψη
+
+Η λογική για τη διαχείριση των παιχνιδιών περιλαμβάνει:
+
+    Την εισαγωγή αριθμών για την τυπική και την μπόνους κλήρωση.
+    Την εκτέλεση των κληρώσεων και την εμφάνιση των αποτελεσμάτων.
+    Την εμφάνιση μηνυμάτων νίκης.
+    Την αποθήκευση του ιστορικού παιχνιδιού.
+
+
+
+
+
+
 5. Μηνύματα Νίκης (Winning Messages)
 
 Αν ο χρήστης κερδίσει σε οποιαδήποτε κλήρωση, ένα μήνυμα νίκης θα εμφανιστεί. Αυτό το κομμάτι απαιτεί μια σύγκριση των αριθμών του χρήστη με τα αποτελέσματα της κλήρωσης.
+
+Αναλυτική Ανάπτυξη για την Αποθήκευση Ιστορικού Παιχνιδιού (Save Game History)
+
+Η αποθήκευση του ιστορικού παιχνιδιού περιλαμβάνει την καταγραφή όλων των ενεργειών του χρήστη και των αποτελεσμάτων των παιχνιδιών σε ένα αρχείο για μελλοντική αναφορά. Αυτό βοηθά τον χρήστη να παρακολουθεί τις επιτυχίες και τις αποτυχίες του, καθώς και τα ποσά που έχει κερδίσει ή χάσει.
+Βήμα 1: Δημιουργία Λίστας Ιστορικού Παιχνιδιού
+
+Χρησιμοποιούμε μια λίστα για να αποθηκεύουμε όλες τις ενέργειες και τα αποτελέσματα του παιχνιδιού κατά τη διάρκεια της εκτέλεσης του προγράμματος.
+
+csharp
+
+private static List<string> gameHistory = new List<string>(); // Λίστα για την αποθήκευση του ιστορικού παιχνιδιού
+
+Βήμα 2: Προσθήκη Εγγραφών στο Ιστορικό Παιχνιδιού
+
+Σε κάθε σημαντικό σημείο του παιχνιδιού, προσθέτουμε μια εγγραφή στο gameHistory. Για παράδειγμα, κατά την εισαγωγή αριθμών και κατά την εκτέλεση της κλήρωσης.
+
+csharp
+
+// Μέθοδος εισαγωγής αριθμών για το κλασικό λόττο
+public static void NumbersInput()
+{
+    if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+
+    Console.WriteLine("Οδηγίες:");
+    Console.WriteLine("Μπορείτε να επιλέξετε 10 αριθμούς μεταξύ 1 και 100 για την τυπική κλήρωση.");
+    Console.WriteLine("Μετά την επιλογή των αριθμών σας, επιλέξτε άλλους δύο αριθμούς μεταξύ 1 και 50 για την κλήρωση bonus.");
+    Console.WriteLine();
+
+    Console.WriteLine("Δώστε τους αριθμούς της επιλογής σας για την τυπική κλήρωση:");
+
+    List<int> classicLottery = new List<int>();
+
+    for (int i = 0; i < 10; i++)
+    {
+        int userInputClassic;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out userInputClassic) && userInputClassic > 0 && userInputClassic <= 100 && !classicLottery.Contains(userInputClassic))
+            {
+                classicLottery.Add(userInputClassic);
+                break;
+            }
+            else
+            {
+                if (userInputClassic < 1 || userInputClassic > 100)
+                {
+                    Console.WriteLine("Παρακαλώ δώστε έναν αριθμό μεταξύ 1 και 100.");
+                }
+                else if (classicLottery.Contains(userInputClassic))
+                {
+                    Console.WriteLine("Ο αριθμός υπάρχει ήδη. Παρακαλώ δώστε έναν άλλο αριθμό.");
+                }
+                else
+                {
+                    Console.WriteLine("Μη έγκυρη εισαγωγή. Παρακαλώ δώστε έναν έγκυρο αριθμό μεταξύ 1 και 100.");
+                }
+            }
+        }
+    }
+
+    Console.WriteLine("\nΟι αριθμοί που επιλέξατε είναι:");
+    foreach (int number in classicLottery)
+    {
+        Console.Write(number + " ");
+    }
+    Console.WriteLine();
+    gameHistory.Add($"Αριθμοί τυπικής κλήρωσης: {string.Join(", ", classicLottery)}");
+}
+
+// Μέθοδος εισαγωγής αριθμών για το λόττο μπόνους
+public static void BonusLottery()
+{
+    if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+
+    Console.WriteLine("\nΔώστε τους αριθμούς της επιλογής σας για την κλήρωση bonus:");
+    List<int> bonusLottery = new List<int>();
+
+    for (int i = 0; i < 2; i++)
+    {
+        int userInputBonus;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out userInputBonus) && userInputBonus > 0 && userInputBonus <= 50 && !bonusLottery.Contains(userInputBonus))
+            {
+                bonusLottery.Add(userInputBonus);
+                break;
+            }
+            else
+            {
+                if (userInputBonus < 1 || userInputBonus > 50)
+                {
+                    Console.WriteLine("Παρακαλώ δώστε έναν αριθμό μεταξύ 1 και 50.");
+                }
+                else if (bonusLottery.Contains(userInputBonus))
+                {
+                    Console.WriteLine("Ο αριθμός υπάρχει ήδη. Παρακαλώ δώστε έναν άλλο αριθμό.");
+                }
+                else
+                {
+                    Console.WriteLine("Μη έγκυρη εισαγωγή. Παρακαλώ δώστε έναν έγκυρο αριθμό μεταξύ 1 και 50.");
+                }
+            }
+        }
+    }
+
+    Console.WriteLine("\nΟι αριθμοί μπόνους που επιλέξατε είναι:");
+    foreach (int number in bonusLottery)
+    {
+        Console.Write(number + " ");
+    }
+    Console.WriteLine();
+    gameHistory.Add($"Αριθμοί κλήρωσης μπόνους: {string.Join(", ", bonusLottery)}");
+}
+
+// Μέθοδος εκτέλεσης της κλασικής κλήρωσης
+public static void LotteryDrawExecution()
+{
+    Console.WriteLine("\nΔιενεργήθηκε η κλήρωση του τυπικού λόττο και τα αποτελέσματα είναι:\n");
+
+    List<int> drawResults = new List<int>();
+    Random random = new Random();
+
+    for (int i = 0; i < 10; i++)
+    {
+        int lotteryNumber;
+        do
+        {
+            lotteryNumber = random.Next(1, 101); // Αριθμός μεταξύ 1 και 100
+        } while (drawResults.Contains(lotteryNumber));
+
+        drawResults.Add(lotteryNumber);
+        Console.WriteLine(lotteryNumber);
+    }
+
+    gameHistory.Add($"Αποτελέσματα τυπικής κλήρωσης: {string.Join(", ", drawResults)}");
+}
+
+// Μέθοδος εκτέλεσης της κλήρωσης μπόνους
+public static void BonusLotteryDrawExecution()
+{
+    Console.WriteLine("\nΔιενεργήθηκε η κλήρωση μπόνους και τα αποτελέσματα είναι:\n");
+
+    List<int> drawResults = new List<int>();
+    Random random = new Random();
+
+    for (int i = 0; i < 2; i++)
+    {
+        int bonusLotteryNumber;
+        do
+        {
+            bonusLotteryNumber = random.Next(1, 51); // Αριθμός μεταξύ 1 και 50
+        } while (drawResults.Contains(bonusLotteryNumber));
+
+        drawResults.Add(bonusLotteryNumber);
+        Console.WriteLine(bonusLotteryNumber);
+    }
+
+    gameHistory.Add($"Αποτελέσματα κλήρωσης μπόνους: {string.Join(", ", drawResults)}");
+}
+
+Βήμα 3: Αποθήκευση του Ιστορικού Παιχνιδιού σε Αρχείο
+
+Η μέθοδος SaveGameHistory αποθηκεύει το περιεχόμενο της λίστας gameHistory σε ένα αρχείο κειμένου.
+
+csharp
+
+public static void SaveGameHistory()
+{
+    string filePath = "game_history.txt";
+    File.WriteAllLines(filePath, gameHistory); // Αποθήκευση του ιστορικού παιχνιδιού στο αρχείο
+    Console.WriteLine($"\nΤο ιστορικό του παιχνιδιού αποθηκεύτηκε στο {filePath}");
+}
+
+Βήμα 4: Κλήση της Μεθόδου Αποθήκευσης στην Κύρια Μέθοδο (Main)
+
+Στην κύρια μέθοδο, καλούμε τη SaveGameHistory πριν τερματιστεί το πρόγραμμα, ώστε να αποθηκευτεί το ιστορικό του παιχνιδιού.
+
+csharp
+
+static void Main(string[] args)
+{
+    RegisterUser();
+    AddFunds();
+
+    while (true)
+    {
+        NumbersInput();
+        BonusLottery();
+        LotteryDrawExecution();
+        BonusLotteryDrawExecution();
+
+        winningMessageClassicLottery();
+        winningMessageBonusLottery();
+
+        Console.WriteLine("Θέλετε να παίξετε ξανά; (ναι/όχι)");
+        if (Console.ReadLine().ToLower() != "ναι")
+        {
+            SaveGameHistory(); // Αποθήκευση του ιστορικού παιχνιδιού πριν τον τερματισμό
+            break;
+        }
+
+        Console.WriteLine("Πατήστε οποιοδήποτε πλήκτρο για να συνεχίσετε.");
+        Console.ReadKey();
+    }
+
+    Console.WriteLine("Πατήστε οποιοδήποτε πλήκτρο για έξοδο.");
+    Console.ReadKey();
+}
+Σύνοψη
+
+Η λογική για την αποθήκευση του ιστορικού παιχνιδιού περιλαμβάνει:
+
+    Δημιουργία Λίστας Ιστορικού Παιχνιδιού: Αποθήκευση όλων των ενεργειών και αποτελεσμάτων του παιχνιδιού.
+    Προσθήκη Εγγραφών στο Ιστορικό Παιχνιδιού: Σε κάθε σημαντικό σημείο του παιχνιδιού, προσθέτουμε μια εγγραφή στο ιστορικό.
+    Αποθήκευση του Ιστορικού Παιχνιδιού σε Αρχείο: Αποθήκευση της λίστας ιστορικού παιχνιδιού σε αρχείο για μελλοντική αναφορά.
+    Κλήση της Μεθόδου Αποθήκευσης στην Κύρια Μέθοδο: Διασφαλίζουμε ότι το ιστορικό αποθηκεύεται πριν τον τερματισμό του προγράμματος.
+
+
+
+
+
+
 6. Διαχείριση Λογαριασμού (Admin Management)
 
+
 Ο διαχειριστής μπορεί να έχει πρόσβαση σε όλα τα δεδομένα και να παρακολουθεί τα κέρδη και τις ζημίες τόσο των χρηστών όσο και του συστήματος.
+
+
+Η διαχείριση λογαριασμού από τον διαχειριστή επιτρέπει την πρόσβαση σε όλα τα δεδομένα των χρηστών και την παρακολούθηση των κερδών και των ζημιών τόσο των χρηστών όσο και του συστήματος. Ο διαχειριστής μπορεί επίσης να έχει τον έλεγχο των οικονομικών στοιχείων και να διαχειρίζεται τις πληρωμές και τις αποπληρωμές.
+Βήμα 1: Δημιουργία Κλάσης Διαχειριστή (Admin)
+
+Η κλάση Admin θα περιέχει τα στοιχεία του διαχειριστή και τις μεθόδους για την παρακολούθηση των δεδομένων.
+
+csharp
+
+using System;
+using System.Collections.Generic;
+
+namespace KinoGame
+{
+    public class Admin
+    {
+        // Στοιχεία διαχειριστή
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+        // Κατασκευαστής για την αρχικοποίηση του διαχειριστή
+        public Admin(string name, string email, string password)
+        {
+            Name = name;
+            Email = email;
+            Password = password;
+        }
+
+        // Μέθοδος για την προβολή των κερδών και των ζημιών των χρηστών
+        public void ViewUserStats(List<UserAccount> users)
+        {
+            foreach (var user in users)
+            {
+                Console.WriteLine($"Χρήστης: {user.Name}, Υπόλοιπο: {user.Balance:C}");
+            }
+        }
+
+        // Μέθοδος για την προβολή των συνολικών κερδών και ζημιών του συστήματος
+        public void ViewSystemStats(decimal totalSystemEarnings)
+        {
+            Console.WriteLine($"Συνολικά κέρδη συστήματος: {totalSystemEarnings:C}");
+        }
+    }
+}
+
+Βήμα 2: Δημιουργία Λίστας Χρηστών και Συνολικών Κερδών
+
+Προσθέτουμε μια λίστα για να αποθηκεύουμε όλους τους χρήστες και μια μεταβλητή για να παρακολουθούμε τα συνολικά κέρδη του συστήματος.
+
+csharp
+
+private static List<UserAccount> users = new List<UserAccount>(); // Λίστα για την αποθήκευση των χρηστών
+private static decimal totalSystemEarnings = 0; // Συνολικά κέρδη του συστήματος
+
+Βήμα 3: Προσθήκη Χρηστών στη Λίστα
+
+Κάθε φορά που εγγράφεται ένας νέος χρήστης, προστίθεται στη λίστα users.
+
+csharp
+
+public static void RegisterUser()
+{
+    Console.WriteLine("Καλώς ήρθατε στο παιχνίδι LuckyNumbers...!!!");
+
+    // Συλλογή προσωπικών στοιχείων
+    Console.Write("Εισάγετε το όνομά σας: ");
+    string name = Console.ReadLine();
+    Console.Write("Εισάγετε το email σας: ");
+    string email = Console.ReadLine();
+    Console.Write("Εισάγετε την ηλικία σας: ");
+    int age = int.Parse(Console.ReadLine());
+    Console.Write("Εισάγετε το ID σας: ");
+    string id = Console.ReadLine();
+
+    // Συλλογή οικονομικών στοιχείων
+    Console.Write("Εισάγετε τον τρόπο πληρωμής σας: ");
+    string paymentMethod = Console.ReadLine();
+    Console.Write("Εισάγετε τον τραπεζικό σας λογαριασμό: ");
+    string bankAccount = Console.ReadLine();
+
+    // Δημιουργία του λογαριασμού χρήστη
+    UserAccount user = new UserAccount(name, email, age, id, paymentMethod, bankAccount);
+    users.Add(user); // Προσθήκη του χρήστη στη λίστα
+}
+
+Βήμα 4: Ενημέρωση Οικονομικών Κατά τη Διάρκεια του Παιχνιδιού
+
+Κάθε φορά που αφαιρείται ή προστίθεται χρήματα από το υπόλοιπο ενός χρήστη, ενημερώνουμε τα συνολικά κέρδη του συστήματος.
+
+csharp
+
+// Μέθοδος για την εισαγωγή αριθμών για το κλασικό λόττο
+public static void NumbersInput()
+{
+    if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+    totalSystemEarnings += 0.10m; // Ενημέρωση των συνολικών κερδών του συστήματος
+
+    Console.WriteLine("Οδηγίες:");
+    Console.WriteLine("Μπορείτε να επιλέξετε 10 αριθμούς μεταξύ 1 και 100 για την τυπική κλήρωση.");
+    Console.WriteLine("Μετά την επιλογή των αριθμών σας, επιλέξτε άλλους δύο αριθμούς μεταξύ 1 και 50 για την κλήρωση bonus.");
+    Console.WriteLine();
+
+    Console.WriteLine("Δώστε τους αριθμούς της επιλογής σας για την τυπική κλήρωση:");
+
+    List<int> classicLottery = new List<int>();
+
+    for (int i = 0; i < 10; i++)
+    {
+        int userInputClassic;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out userInputClassic) && userInputClassic > 0 && userInputClassic <= 100 && !classicLottery.Contains(userInputClassic))
+            {
+                classicLottery.Add(userInputClassic);
+                break;
+            }
+            else
+            {
+                if (userInputClassic < 1 || userInputClassic > 100)
+                {
+                    Console.WriteLine("Παρακαλώ δώστε έναν αριθμό μεταξύ 1 και 100.");
+                }
+                else if (classicLottery.Contains(userInputClassic))
+                {
+                    Console.WriteLine("Ο αριθμός υπάρχει ήδη. Παρακαλώ δώστε έναν άλλο αριθμό.");
+                }
+                else
+                {
+                    Console.WriteLine("Μη έγκυρη εισαγωγή. Παρακαλώ δώστε έναν έγκυρο αριθμό μεταξύ 1 και 100.");
+                }
+            }
+        }
+    }
+
+    Console.WriteLine("\nΟι αριθμοί που επιλέξατε είναι:");
+    foreach (int number in classicLottery)
+    {
+        Console.Write(number + " ");
+    }
+    Console.WriteLine();
+    gameHistory.Add($"Αριθμοί τυπικής κλήρωσης: {string.Join(", ", classicLottery)}");
+}
+
+Βήμα 5: Πρόσβαση Διαχειριστή (Admin Access)
+
+Δημιουργούμε μεθόδους που επιτρέπουν στον διαχειριστή να συνδέεται και να παρακολουθεί τα δεδομένα των χρηστών και του συστήματος.
+
+csharp
+
+public static Admin admin;
+
+public static void AdminLogin()
+{
+    Console.WriteLine("Είσοδος διαχειριστή:");
+    Console.Write("Email: ");
+    string email = Console.ReadLine();
+    Console.Write("Password: ");
+    string password = Console.ReadLine();
+
+    if (admin != null && admin.Email == email && admin.Password == password)
+    {
+        Console.WriteLine("Επιτυχής είσοδος διαχειριστή!");
+        AdminMenu();
+    }
+    else
+    {
+        Console.WriteLine("Λάθος στοιχεία. Προσπαθήστε ξανά.");
+    }
+}
+
+public static void AdminMenu()
+{
+    while (true)
+    {
+        Console.WriteLine("\nΜενού διαχειριστή:");
+        Console.WriteLine("1. Προβολή στατιστικών χρηστών");
+        Console.WriteLine("2. Προβολή συνολικών κερδών συστήματος");
+        Console.WriteLine("3. Έξοδος");
+
+        Console.Write("Επιλέξτε μια επιλογή: ");
+        string choice = Console.ReadLine();
+
+        switch (choice)
+        {
+            case "1":
+                admin.ViewUserStats(users);
+                break;
+            case "2":
+                admin.ViewSystemStats(totalSystemEarnings);
+                break;
+            case "3":
+                return;
+            default:
+                Console.WriteLine("Μη έγκυρη επιλογή. Προσπαθήστε ξανά.");
+                break;
+        }
+    }
+}
+
+Βήμα 6: Κύρια Μέθοδος (Main)
+
+Στην κύρια μέθοδο, προσθέτουμε τη δυνατότητα να συνδεθεί ο διαχειριστής και να έχει πρόσβαση στο μενού διαχείρισης.
+
+static void Main(string[] args)
+{
+    // Δημιουργία διαχειριστή
+    admin = new Admin("Admin", "admin@example.com", "password");
+
+    // Κύριο μενού
+    while (true)
+    {
+        Console.WriteLine("\nΚύριο μενού:");
+        Console.WriteLine("1. Εγγραφή χρήστη");
+        Console.WriteLine("2. Προσθήκη χρημάτων");
+        Console.WriteLine("3. Παιχνίδι");
+        Console.WriteLine("4. Είσοδος διαχειριστή");
+        Console.WriteLine("5. Έξοδος");
+
+        Console.Write("Επιλέξτε μια επιλογή: ");
+        string choice = Console.ReadLine();
+
+        switch (choice)
+        {
+            case "1":
+                RegisterUser();
+                break;
+            case "2":
+                AddFunds();
+                break;
+            case "3":
+                NumbersInput();
+                BonusLottery();
+                LotteryDrawExecution();
+                BonusLotteryDrawExecution();
+                winningMessageClassicLottery();
+                winningMessageBonusLottery();
+                break;
+            case "4":
+                AdminLogin();
+                break;
+            case "5":
+                SaveGameHistory();
+                return;
+            default:
+                Console.WriteLine("Μη έγκυρη επιλογή. Προσπαθήστε ξανά.");
+                break;
+        }
+    }
+}
+
+Σύνοψη
+
+Η λογική για τη διαχείριση λογαριασμού από τον διαχειριστή περιλαμβάνει:
+
+    Δημιουργία Κλάσης Διαχειριστή: Αποθήκευση στοιχείων διαχειριστή και μεθόδους παρακολούθησης των δεδομένων.
+    Δημιουργία Λίστας Χρηστών και Συνολικών Κερδών: Παρακολούθηση όλων των χρηστών και των κερδών του συστήματος.
+    Προσθήκη Χρηστών στη Λίστα: Κάθε φορά που εγγράφεται ένας νέος χρήστης.
+    Ενημέρωση Οικονομικών Κατά τη Διάρκεια του Παιχνιδιού: Κάθε φορά που αφαιρούνται ή προστίθενται χρήματα από το υπόλοιπο του χρήστη.
+    Πρόσβαση Διαχειριστή: Είσοδος διαχειριστή και πρόσβαση στο μενού διαχείρισης.
+    Κύρια Μέθοδος: Δυνατότητα διαχειριστή να συνδεθεί και να παρακολουθεί τα δεδομένα.
