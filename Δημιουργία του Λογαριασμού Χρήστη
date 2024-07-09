@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO; // Προσθήκη για λειτουργίες αρχείων
+
+namespace KinoGame
+{
+    public class UserAccount
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public int Age { get; set; }
+        public string ID { get; set; }
+        public string PaymentMethod { get; set; }
+        public string BankAccount { get; set; }
+
+        public decimal Balance { get; set; } // Υπόλοιπο χρημάτων του χρήστη
+
+        public UserAccount(string name, string email, int age, string id, string paymentMethod, string bankAccount)
+        {
+            Name = name;
+            Email = email;
+            Age = age;
+            ID = id;
+            PaymentMethod = paymentMethod;
+            BankAccount = bankAccount;
+            Balance = 0;
+        }
+
+        public void AddFunds(decimal amount)
+        {
+            Balance += amount;
+            Console.WriteLine($"Added {amount:C} to your balance. Current balance: {Balance:C}");
+        }
+
+        public bool DeductFunds(decimal amount)
+        {
+            if (Balance >= amount)
+            {
+                Balance -= amount;
+                return true;
+            }
+            Console.WriteLine("Insufficient balance. Please add more funds.");
+            return false;
+        }
+    }
+}
