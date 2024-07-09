@@ -1,0 +1,221 @@
+namespace KinoGame
+{
+    public class KinoGame
+    {
+        private static UserAccount user;
+        private static List<string> gameHistory = new List<string>(); // Ιστορικό παιχνιδιού
+
+        public static void RegisterUser()
+        {
+            Console.WriteLine("Welcome to the LuckyNumbers Game...!!!");
+            Console.Write("Enter your name: ");
+            string name = Console.ReadLine();
+            Console.Write("Enter your email: ");
+            string email = Console.ReadLine();
+            Console.Write("Enter your age: ");
+            int age = int.Parse(Console.ReadLine());
+            Console.Write("Enter your ID: ");
+            string id = Console.ReadLine();
+            Console.Write("Enter your payment method: ");
+            string paymentMethod = Console.ReadLine();
+            Console.Write("Enter your bank account: ");
+            string bankAccount = Console.ReadLine();
+
+            user = new UserAccount(name, email, age, id, paymentMethod, bankAccount);
+        }
+
+        public static void AddFunds()
+        {
+            Console.Write("Enter the amount to add to your balance: ");
+            decimal amount = decimal.Parse(Console.ReadLine());
+            user.AddFunds(amount);
+        }
+
+        public static void NumbersInput()
+        {
+            if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+
+            Console.WriteLine("Instructions:");
+            Console.WriteLine("You can choose 10 numbers between 1 and 100 for the standard lottery draw.");
+            Console.WriteLine("After choosing your numbers, choose another two numbers between 1 and 50 for the bonus lottery draw.");
+            Console.WriteLine();
+
+            Console.WriteLine("Give the numbers of your choice for the standard lottery draw:");
+
+            List<int> classicLottery = new List<int>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                int userInputClassic;
+                while (true)
+                {
+                    if (int.TryParse(Console.ReadLine(), out userInputClassic) && userInputClassic > 0 && userInputClassic <= 100 && !classicLottery.Contains(userInputClassic))
+                    {
+                        classicLottery.Add(userInputClassic);
+                        break;
+                    }
+                    else
+                    {
+                        if (userInputClassic < 1 || userInputClassic > 100)
+                        {
+                            Console.WriteLine("Please give a number between 1 and 100.");
+                        }
+                        else if (classicLottery.Contains(userInputClassic))
+                        {
+                            Console.WriteLine("The number already exists. Please give another number.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Please give a valid number between 1 and 100.");
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine("\nThe numbers you chose are:");
+            foreach (int number in classicLottery)
+            {
+                Console.Write(number + " ");
+            }
+            Console.WriteLine();
+            gameHistory.Add($"Standard draw numbers: {string.Join(", ", classicLottery)}");
+        }
+
+        public static void BonusLottery()
+        {
+            if (!user.DeductFunds(0.10m)) return; // Αφαίρεση 0.10 ευρώ από το υπόλοιπο του χρήστη για να παίξει
+
+            Console.WriteLine("\nGive the numbers of your choice for the bonus lottery draw:");
+            List<int> bonusLottery = new List<int>();
+
+            for (int i = 0; i < 2; i++)
+            {
+                int userInputBonus;
+                while (true)
+                {
+                    if (int.TryParse(Console.ReadLine(), out userInputBonus) && userInputBonus > 0 && userInputBonus <= 50 && !bonusLottery.Contains(userInputBonus))
+                    {
+                        bonusLottery.Add(userInputBonus);
+                        break;
+                    }
+                    else
+                    {
+                        if (userInputBonus < 1 || userInputBonus > 50)
+                        {
+                            Console.WriteLine("Please give a number between 1 and 50.");
+                        }
+                        else if (bonusLottery.Contains(userInputBonus))
+                        {
+                            Console.WriteLine("The number already exists. Please give another number.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Please give a valid number between 1 and 50.");
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine("\nThe bonus numbers you chose are:");
+            foreach (int number in bonusLottery)
+            {
+                Console.Write(number + " ");
+            }
+            Console.WriteLine();
+            gameHistory.Add($"Bonus draw numbers: {string.Join(", ", bonusLottery)}");
+        }
+
+        public static void LotteryDrawExecution()
+        {
+            Console.WriteLine("\nWe performed the classic lottery draw and the results are: \n");
+
+            List<int> list = new List<int>();
+            Random random = new Random();
+
+            for (int i = 0; i < 10; i++)
+            {
+                int lotteryNumber;
+                do
+                {
+                    lotteryNumber = random.Next(1, 101); // Αριθμός μεταξύ 1 και 100
+                } while (list.Contains(lotteryNumber));
+
+                list.Add(lotteryNumber);
+                Console.WriteLine(lotteryNumber);
+            }
+
+            gameHistory.Add($"Classic draw results: {string.Join(", ", list)}");
+        }
+
+        public static void BonusLotteryDrawExecution()
+        {
+            Console.WriteLine("\nWe performed the bonus lottery draw and the results are: \n");
+
+            List<int> list = new List<int>();
+            Random random = new Random();
+
+            for (int i = 0; i < 2; i++)
+            {
+                int bonusLotteryNumber;
+                do
+                {
+                    bonusLotteryNumber = random.Next(1, 51); // Αριθμός μεταξύ 1 και 50
+                } while (list.Contains(bonusLotteryNumber));
+
+                list.Add(bonusLotteryNumber);
+                Console.WriteLine(bonusLotteryNumber);
+            }
+
+            gameHistory.Add($"Bonus draw results: {string.Join(", ", list)}");
+        }
+
+        public static void winningMessageClassicLottery()
+        {
+            // Υποθέτουμε ότι κάποια λογική σύγκρισης θα προστίθεται εδώ για να καθοριστεί αν ο χρήστης κέρδισε
+            Console.WriteLine("You won the classic lottery. You have matching numbers");
+        }
+
+        public static void winningMessageBonusLottery()
+        {
+            // Υποθέτουμε ότι κάποια λογική σύγκρισης θα προστίθεται εδώ για να καθοριστεί αν ο χρήστης κέρδισε
+            Console.WriteLine("\nYou won the bonus lottery. You have matching numbers\n");
+        }
+
+        public static void SaveGameHistory()
+        {
+            string filePath = "game_history.txt";
+            File.WriteAllLines(filePath, gameHistory);
+            Console.WriteLine($"\nGame history saved to {filePath}");
+        }
+
+        static void Main(string[] args)
+        {
+            RegisterUser();
+            AddFunds();
+
+            while (true)
+            {
+                NumbersInput();
+                BonusLottery();
+                LotteryDrawExecution();
+                BonusLotteryDrawExecution();
+
+                winningMessageClassicLottery();
+                winningMessageBonusLottery();
+
+                Console.WriteLine("Do you want to play again? (yes/no)");
+                if (Console.ReadLine().ToLower() != "yes")
+                {
+                    SaveGameHistory();
+                    break;
+                }
+
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+            }
+
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
+        }
+    }
+}
