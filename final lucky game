@@ -189,6 +189,8 @@ namespace KinoGame
             winningMessageClassicLottery();
             winningMessageBonusLottery();
 
+            UserAccount.MessagesPersonalInformationInput();
+            UserAccount.PersonalInformationInput();
 
 
             Console.WriteLine("Press any key to exit.");
@@ -196,3 +198,4 @@ namespace KinoGame
         }
     }
 }
+
