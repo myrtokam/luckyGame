@@ -1,0 +1,103 @@
+using System;
+using Microsoft.VisualBasic;
+
+public class UserAccount
+{
+
+    public Char FirstName { get; set; }
+    public Char LastName { get; set; }
+    public int Age { get; set; }
+    public DateTime BirthDay { get; set; }
+    public string Mail { get; set; }
+    public double ID { get; set; }
+
+
+    static List<Dictionary<string, object>> userAcounts = new List<Dictionary<string, object>>();
+
+
+    public UserAccount(Char FirstName, Char LastName, int Age, DateTime BirthDay, string Mail, double ID)
+    {
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Age = Age;
+        this.BirthDay = BirthDay;
+        this.Mail = Mail;
+        this.ID = ID;
+
+
+
+
+    }
+
+    public static void MessagesPersonalInformationInput()
+    {
+        Console.WriteLine("\n Wellcome");
+        Console.WriteLine("\n You need to register so you can play the game.");
+        Console.WriteLine("\n Fillfield your personal information:");
+
+    }
+
+    public static void PersonalInformationInput(Char FirstName, Char LastName, int Age, DateTime BirthDay, string Mail, int ID)
+
+    {
+
+
+        List<char> personalInformation = new List<char>();
+
+        Console.WriteLine("\n Write your First Name:");
+        FirstName = Convert.ToChar(value: Console.ReadLine());
+
+        Console.WriteLine("\n Write your LastName:");
+        LastName = Convert.ToChar(value: Console.ReadLine());
+
+
+        Console.WriteLine("\n Write your Age:");
+        Age = Convert.ToInt32(value: Console.ReadLine());
+        while (Age != null)
+        {
+            if (Age < 18)
+            {
+                Console.WriteLine("You cannot register, because you are under Age");
+
+            }
+            break;
+
+
+        }
+
+
+        Console.WriteLine("\n Write your BirthDay:");
+        BirthDay = Convert.ToDateTime(value: Console.ReadLine());
+
+        while (BirthDay != null)
+        {
+            if (BirthDay.Year != null && Age < 18)
+            {
+                Console.WriteLine("You cannot register, because you are under Age");
+
+            }
+            break;
+
+
+        }
+
+
+        Console.WriteLine("\n Write your Mail:");
+        Mail = Convert.ToString(value: Console.ReadLine());
+
+        Console.WriteLine("\n Write your ID");
+        ID = Convert.ToInt32(value: Console.ReadLine());
+
+
+        var userRegistry = new Dictionary<string, object>
+        {
+            { "FirstName",FirstName}, { "LastName", LastName}, {"Age", Age }, { "BirthDay", BirthDay }, {"Mail", Mail }, { "ID", ID }
+        };
+
+
+        userAcounts.Add(userRegistry);
+
+        Console.WriteLine("\n Η εγγραφή σας ολοκληρώθηκε με επιτυχία");
+    }
+
+}
