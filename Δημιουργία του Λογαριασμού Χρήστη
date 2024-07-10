@@ -1,49 +1,113 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO; // Προσθήκη για λειτουργίες αρχείων
+using System.ComponentModel.Design;
+using Microsoft.VisualBasic;
 
-namespace KinoGame
+public class UserAccount
 {
-    public class UserAccount
+
+    public Char FirstName { get; set; }
+    public Char LastName { get; set; }
+    public int Age { get; set; }
+    public DateTime BirthDay { get; set; }
+    public string Mail { get; set; }
+    public double ID { get; set; }
+
+
+    static List<Dictionary<string, object>> userAcounts = new List<Dictionary<string, object>>();
+
+
+    public UserAccount(Char FirstName, Char LastName, int Age, DateTime BirthDay, string Mail, double ID)
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public int Age { get; set; }
-        public string ID { get; set; }
-        public string PaymentMethod { get; set; }
-        public string BankAccount { get; set; }
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Age = Age;
+        this.BirthDay = BirthDay;
+        this.Mail = Mail;
+        this.ID = ID;
 
-        public decimal Balance { get; set; } // Υπόλοιπο χρημάτων του χρήστη
 
-        public UserAccount(string name, string email, int age, string id, string paymentMethod, string bankAccount)
-        {
-            Name = name;
-            Email = email;
-            Age = age;
-            ID = id;
-            PaymentMethod = paymentMethod;
-            BankAccount = bankAccount;
-            Balance = 0;
-        }
 
-        public void AddFunds(decimal amount)
-        {
-            Balance += amount;
-            Console.WriteLine($"Added {amount:C} to your balance. Current balance: {Balance:C}");
-        }
 
-        public bool DeductFunds(decimal amount)
-        {
-            if (Balance >= amount)
-            {
-                Balance -= amount;
-                return true;
-            }
-            Console.WriteLine("Insufficient balance. Please add more funds.");
-            return false;
-        }
     }
+
+    public static void MessagesPersonalInformationInput()
+    {
+        Console.WriteLine("\n Wellcome");
+        Console.WriteLine("\n You need to register so you can play the game.");
+        Console.WriteLine("\n Fillfield your personal information:");
+
+    }
+
+    public static void PersonalInformationInput()
+
+    {
+
+
+        Console.WriteLine("\n Write your First Name:");
+        var FirstName=Console.ReadLine();
+        userAcounts.Add(FirstName);
+        Console.Write("name:" + FirstName);
+
+        Console.WriteLine("\n Write your LastName:");
+        char LastName = Convert.ToChar(value: Console.ReadLine());
+
+
+        Console.WriteLine("\n Write your Age:");
+        int Age = Convert.ToInt32(value: Console.ReadLine());
+        while (Age != null)
+        {
+            if (Age < 18)
+            {
+                Console.WriteLine("You cannot register, because you are under Age");
+
+            }
+            break;
+
+
+        }
+
+
+        Console.WriteLine("\n Write your BirthDay:");
+        DateTime BirthDay = Convert.ToDateTime(value: Console.ReadLine());
+
+        while (BirthDay != null)
+        {
+            if (BirthDay.Year != null && Age < 18)
+            {
+                Console.WriteLine("You cannot register, because you are under Age");
+
+            }
+            break;
+
+
+        }
+
+
+        Console.WriteLine("\n Write your Mail:");
+        string Mail = Convert.ToString(value: Console.ReadLine());
+
+        Console.WriteLine("\n Write your ID");
+        double ID = Convert.ToInt32(value: Console.ReadLine());
+
+
+
+        var userRegistry = new Dictionary<string, object>
+        {
+            { "FirstName",FirstName}, { "LastName", LastName}, {"Age", Age }, { "BirthDay", BirthDay }, {"Mail", Mail }, { "ID", ID }
+        };
+
+
+        userAcounts.Add(userRegistry);
+
+        Console.WriteLine("\n Η εγγραφή σας ολοκληρώθηκε με επιτυχία");
+
+        foreach (var user in userAcounts)
+        {
+            Console.WriteLine($"First Name: {user["FirstName"]}, Last Name: {user["LastName"]}, Age: {user["Age"]}, Birth Day: {user["BirthDay"]}, Mail: {user["Mail"]}, ID: {user["ID"]}");
+
+
+        };
+    }
+
+
 }
