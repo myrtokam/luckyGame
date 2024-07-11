@@ -116,61 +116,63 @@ public class UserAccount
 
 
                 Console.WriteLine("\n Write your Age:");
+                
                 var Age = Convert.ToDouble(value: Console.ReadLine());
+                string AgeOfuser = Console.ReadLine();
                 while (true)
                 {
                     if (Age < 18)
                     {
                         Console.WriteLine("You cannot register, because you are under Age");
-                      
+                        continue;
                     }
                     if (Age > 18)
                     {
                         Console.WriteLine("age: " + Age);
+                        continue;
 
-                      
                     }
                     if (Age == Double.NegativeInfinity)
                     {
                         Console.WriteLine("You cannot register, You write invalide age");
-                       
+                        continue;
 
+                      
                     }
-                    var number = Convert.ToString(Age);
-                   if (string.IsNullOrEmpty(number))
-                 //  if (A.Any(char.IsDigit))
+                    if (AgeOfuser == string.Empty)
+                    
                     {
                         Console.WriteLine("You cannot register, You write invalide age");
-                        continue ;
+                        continue;
                     }
 
 
 
                     Console.WriteLine("\n Write your BirthDay:");
-                    DateTime BirthDay = Convert.ToDateTime(value: Console.ReadLine());
+                DateTime BirthDay = Convert.ToDateTime(value: Console.ReadLine());
 
-                    while (true)
+                while (true)
+                {
+                    if (BirthDay.Year != null && Age < 18)
                     {
-                        if (BirthDay.Year != null && Age < 18)
-                        {
-                            Console.WriteLine("You cannot register, because you are under Age");
-
-                        }
-                        break;
-
+                        Console.WriteLine("You cannot register, because you are under Age");
 
                     }
+                    break;
 
 
-                    Console.WriteLine("\n Write your Mail:");
-                    string Mail = Convert.ToString(value: Console.ReadLine());
-
-                    Console.WriteLine("\n Write your ID");
-                    double ID = Convert.ToInt32(value: Console.ReadLine());
+                }
 
 
+                Console.WriteLine("\n Write your Mail:");
+                string Mail = Convert.ToString(value: Console.ReadLine());
 
-                    var userRegistry = new Dictionary<string, object>
+                Console.WriteLine("\n Write your ID");
+                double ID = Convert.ToInt32(value: Console.ReadLine());
+
+
+
+                var userRegistry = new Dictionary<string, object>
             {
 
             { "FirstName",FirstName}, { "LastName", LastName}, {"Age", Age }, { "BirthDay", BirthDay }, {"Mail", Mail }, { "ID", ID }
@@ -178,22 +180,21 @@ public class UserAccount
 
 
 
-                    userAcounts.Add(userRegistry);
+                userAcounts.Add(userRegistry);
 
-                    Console.WriteLine("\n Η εγγραφή σας ολοκληρώθηκε με επιτυχία");
+                Console.WriteLine("\n Η εγγραφή σας ολοκληρώθηκε με επιτυχία");
 
-                    foreach (var user in userAcounts)
-                    {
-                        Console.WriteLine($"First Name: {user["FirstName"]}, Last Name: {user["LastName"]}, Age: {user["Age"]}, Birth Day: {user["BirthDay"]}, Mail: {user["Mail"]}, ID: {user["ID"]}");
+                foreach (var user in userAcounts)
+                {
+                    Console.WriteLine($"First Name: {user["FirstName"]}, Last Name: {user["LastName"]}, Age: {user["Age"]}, Birth Day: {user["BirthDay"]}, Mail: {user["Mail"]}, ID: {user["ID"]}");
 
 
-                    };
-                }
+                };
             }
-
         }
 
     }
-}  
+}
+ }
 
 
