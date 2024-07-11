@@ -1,10 +1,15 @@
 using System;
+using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using Microsoft.VisualBasic;
+
 
 public class UserAccount
 {
 
-    public Char FirstName { get; set; }
+    public string FirstName { get; set; }
     public Char LastName { get; set; }
     public int Age { get; set; }
     public DateTime BirthDay { get; set; }
@@ -15,7 +20,7 @@ public class UserAccount
     static List<Dictionary<string, object>> userAcounts = new List<Dictionary<string, object>>();
 
 
-    public UserAccount(Char FirstName, Char LastName, int Age, DateTime BirthDay, string Mail, double ID)
+    public UserAccount(string FirstName, Char LastName, int Age, DateTime BirthDay, string Mail, double ID)
     {
         this.FirstName = FirstName;
         this.LastName = LastName;
@@ -37,67 +42,114 @@ public class UserAccount
 
     }
 
-    public static void PersonalInformationInput(Char FirstName, Char LastName, int Age, DateTime BirthDay, string Mail, int ID)
+    public  void FirstNameCaracters()
+    {
+
+        var Name = Convert.ToChar(value: FirstName);
+        if (char.IsDigit(Name))
+            if (char.IsSymbol(Name))
+                if (char.IsWhiteSpace(Name))
+                {
+                    Console.WriteLine($"{Name}  Give a valid Name");
+                }
+
+
+    }
+
+    public static void PersonalInformationInput()
 
     {
 
 
-        List<char> personalInformation = new List<char>();
-
-        Console.WriteLine("\n Write your First Name:");
-        FirstName = Convert.ToChar(value: Console.ReadLine());
-
-        Console.WriteLine("\n Write your LastName:");
-        LastName = Convert.ToChar(value: Console.ReadLine());
-
-
-        Console.WriteLine("\n Write your Age:");
-        Age = Convert.ToInt32(value: Console.ReadLine());
-        while (Age != null)
+        while (true)
         {
-            if (Age < 18)
+            Console.WriteLine("\n Write your First Name:");
+            var FirstName = Convert.ToString(value: Console.ReadLine());
+            // userAcounts.Add(FirstName);
+            Console.Write("name:" + FirstName);
+            if (String.IsNullOrEmpty(FirstName))
             {
-                Console.WriteLine("You cannot register, because you are under Age");
+             Console.WriteLine("This value must not be empty.! Please write your Name");
+                        
+            }
+            string? firstName = FirstName;
+            if (FirstName.Any(char.IsDigit))
+                if (FirstName.Any(char.IsNumber))
+                    if (FirstName.Any(char.IsSymbol))
+                    {
+
+                Console.WriteLine("Give a valid Name");
+            }
+
+
+
+
+            Console.WriteLine("\n Write your LastName:");
+            string LastName = Console.ReadLine();
+
+
+
+            Console.WriteLine("\n Write your Age:");
+            int Age = Convert.ToInt32(value: Console.ReadLine());
+            while (Age != null)
+            {
+                if (Age < 18)
+                {
+                    Console.WriteLine("You cannot register, because you are under Age");
+                    break;
+                }   
+                    if (Age > 18)
+                    {
+                        continue;
+                    }
+                
+            }
+
+            Console.WriteLine("\n Write your BirthDay:");
+            DateTime BirthDay = Convert.ToDateTime(value: Console.ReadLine());
+
+            while (BirthDay != null)
+            {
+                if (BirthDay.Year != null && Age < 18)
+                {
+                    Console.WriteLine("You cannot register, because you are under Age");
+
+                }
+                break;
+
 
             }
-            break;
 
 
-        }
+            Console.WriteLine("\n Write your Mail:");
+            string Mail = Convert.ToString(value: Console.ReadLine());
+
+            Console.WriteLine("\n Write your ID");
+            double ID = Convert.ToInt32(value: Console.ReadLine());
 
 
-        Console.WriteLine("\n Write your BirthDay:");
-        BirthDay = Convert.ToDateTime(value: Console.ReadLine());
 
-        while (BirthDay != null)
-        {
-            if (BirthDay.Year != null && Age < 18)
+            var userRegistry = new Dictionary<string, object>
             {
-                Console.WriteLine("You cannot register, because you are under Age");
 
-            }
-            break;
-
-
-        }
-
-
-        Console.WriteLine("\n Write your Mail:");
-        Mail = Convert.ToString(value: Console.ReadLine());
-
-        Console.WriteLine("\n Write your ID");
-        ID = Convert.ToInt32(value: Console.ReadLine());
-
-
-        var userRegistry = new Dictionary<string, object>
-        {
             { "FirstName",FirstName}, { "LastName", LastName}, {"Age", Age }, { "BirthDay", BirthDay }, {"Mail", Mail }, { "ID", ID }
-        };
+            };
 
 
-        userAcounts.Add(userRegistry);
 
-        Console.WriteLine("\n Η εγγραφή σας ολοκληρώθηκε με επιτυχία");
+            userAcounts.Add(userRegistry);
+
+            Console.WriteLine("\n Η εγγραφή σας ολοκληρώθηκε με επιτυχία");
+
+            foreach (var user in userAcounts)
+            {
+                Console.WriteLine($"First Name: {user["FirstName"]}, Last Name: {user["LastName"]}, Age: {user["Age"]}, Birth Day: {user["BirthDay"]}, Mail: {user["Mail"]}, ID: {user["ID"]}");
+
+
+            };
+        }
     }
 
+
 }
+
