@@ -10,6 +10,8 @@ using System.Threading.Channels;
 using System.Xml.Linq;
 using Microsoft.VisualBasic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Net;
+using System.Net.Mail;
 
 
 public class UserAccount
@@ -98,6 +100,7 @@ public class UserAccount
         while (true)
         {
             Console.WriteLine("\n Write your Birth Day (dd-mm-yyyy):");
+            
             if (!DateTime.TryParse(Console.ReadLine(), out BirthDay))
             {
                 Console.WriteLine("Please give a valid date.");
@@ -110,13 +113,23 @@ public class UserAccount
         {
             Console.WriteLine("\n Write your Mail:");
             Mail = Console.ReadLine();
-
+            string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|gr|net|org|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum|eu)$";
             if (string.IsNullOrWhiteSpace(Mail) || !Mail.Contains("@"))
-            {
+            
+              {
                 Console.WriteLine("Please give a valid email address.");
                 continue;
             }
+
+            if (Regex.IsMatch(Mail, emailPattern))
+            {
+                Console.WriteLine(Mail);
+            }
+
+
             break;
+
+
         }
 
         while (true)
@@ -150,6 +163,10 @@ public class UserAccount
         }
     }
 }
+
+
+
+
 
 
 
