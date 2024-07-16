@@ -1,0 +1,69 @@
+using System;
+using KinoGame;
+
+namespace KinoGame
+{
+    public class FinancialRegistration
+    {
+
+        // λιστα dictionary για oikonomika στοιχεια
+        static List<Dictionary<string, object>> userBankAcounts = new List<Dictionary<string, object>>();
+
+
+        //αρχικοποιηση οικονομικων στοιχειων
+        public string iban { get; set; }
+        public string paypalAcount { get; set; }
+        public string googleAcount { get; set; }
+
+        public int cardNumber { get; set; }
+        public int cardCsv { get; set; }
+
+        public DateTime cardExpiration { get; set; }
+
+        public string BankName { get; set; }
+
+
+        public FinancialRegistration()
+        {
+        }
+    }
+
+    //Οικονομικά Στοιχεία
+
+    //   Τρόπος Πληρωμής: Καθορίζει τον τρόπο με τον οποίο ο χρήστης θα πραγματοποιεί πληρωμές.
+    //τραπεζικη μεταφορα
+    //ηλεκτρονικο πορτοφολι
+    //μεσω καρτας
+    //paypal
+    //googlepay
+
+    //Τραπεζικός Λογαριασμός: Χρησιμοποιείται για την επαλήθευση και την πραγματοποίηση συναλλαγών.
+
+
+
+    //αποθηκευση στοιχειων σε λιστα
+
+    var userFinancialRegistry = new Dictionary<string, object>
+        {
+            { "FirstName", FirstName },
+            { "LastName", LastName },
+            { "Age", int.Parse(AgeOfuser) },
+            { "BirthDay", BirthDay },
+            { "Mail", Mail },
+            { "ID", ID }
+        };
+
+
+    //εκτυπωση
+
+    FinancialRegistration.Add(userFinancialRegistry);
+
+Console.WriteLine("\n Your registration is completed successfully.");
+
+foreach (var user in userFinancialRegistry)
+{
+    Console.WriteLine($"First Name: {user["FirstName"]}, Last Name: {user["LastName"]}, 
+        Age: {user["Age"]}, Birth Day: {user["BirthDay"]}, Mail: {user["Mail"]}, ID: {user["ID"]}");
+}
+
+}
