@@ -1,0 +1,14 @@
+using System;
+
+
+namespace 
+{ 
+public class UserTryAndFundsMemoryStream
+{
+
+        //         Μια μέθοδος για την αποθήκευση του ιστορικού παιχνιδιού σε αρχείο για μελλοντική αναφορά.
+
+    public UserTryAndFundsMemoryStream()
+	{
+	}
+}
