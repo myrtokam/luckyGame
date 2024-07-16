@@ -13,137 +13,139 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Net;
 using System.Net.Mail;
 
-
-public class UserAccount
+namespace KinoGame
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; } // Changed to string for LastName
-    public int Age { get; set; }
-    public DateTime BirthDay { get; set; }
-    public string Mail { get; set; }
-    public string ID { get; set; }
 
-    static List<Dictionary<string, object>> userAcounts = new List<Dictionary<string, object>>();
-
-    public UserAccount(string FirstName, string LastName, int Age, DateTime BirthDay, string Mail, string ID) 
+    public class UserAccount
     {
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Age = Age;
-        this.BirthDay = BirthDay;
-        this.Mail = Mail;
-        this.ID = ID;
-    }
+        public string FirstName { get; set; }
+        public string LastName { get; set; } // Changed to string for LastName
+        public int Age { get; set; }
+        public DateTime BirthDay { get; set; }
+        public string Mail { get; set; }
+        public string ID { get; set; }
 
-    public static void MessagesPersonalInformationInput()
-    {
-        Console.WriteLine("\n Welcome");
-        Console.WriteLine("\n You need to register so you can play the game.");
-        Console.WriteLine("\n Fill in your personal information:");
-    }
+        static List<Dictionary<string, object>> userAcounts = new List<Dictionary<string, object>>();
 
-    public static void PersonalInformationInput()
-    {
-        string FirstName = string.Empty;
-        string LastName = string.Empty;
-        string AgeOfuser = string.Empty;
-        DateTime BirthDay = DateTime.MinValue;
-        string Mail = string.Empty;
-        string ID=null;
-
-        while (true)
+        public UserAccount(string FirstName, string LastName, int Age, DateTime BirthDay, string Mail, string ID)
         {
-            Console.WriteLine("\n Write your First Name:");
-            FirstName = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(FirstName) || FirstName.Any(char.IsDigit) || FirstName.Any(char.IsSymbol) || FirstName.Any(char.IsNumber))
-            {
-                Console.WriteLine("You have inserted invalid characters. Please give a valid Name.");
-                continue;
-            }
-            break;
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.Age = Age;
+            this.BirthDay = BirthDay;
+            this.Mail = Mail;
+            this.ID = ID;
         }
 
-        while (true)
+        public static void MessagesPersonalInformationInput()
         {
-            Console.WriteLine("\n Write your Last Name:");
-            LastName = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(LastName) || LastName.Any(char.IsDigit) || LastName.Any(char.IsSymbol) || LastName.Any(char.IsNumber)) 
-            {
-                Console.WriteLine("You have inserted invalid characters. Please give a valid Last Name.");
-                continue;
-            }
-            break;
+            Console.WriteLine("\n Welcome");
+            Console.WriteLine("\n You need to register so you can play the game.");
+            Console.WriteLine("\n Fill in your personal information:");
         }
 
-        while (true)
+        public static void PersonalInformationInput()
         {
-            Console.WriteLine("\n Write your Age:");
-            AgeOfuser = Console.ReadLine();
+            string FirstName = string.Empty;
+            string LastName = string.Empty;
+            string AgeOfuser = string.Empty;
+            DateTime BirthDay = DateTime.MinValue;
+            string Mail = string.Empty;
+            string ID = null;
 
-            if (string.IsNullOrWhiteSpace(AgeOfuser) || !int.TryParse(AgeOfuser, out int age) || age < 0)
+            while (true)
             {
-                Console.WriteLine("Please give a valid age.");
-                continue;
-            }
+                Console.WriteLine("\n Write your First Name:");
+                FirstName = Console.ReadLine();
 
-            if (age < 18)
-            {
-                Console.WriteLine("You cannot register, because you are under age.");
-                Console.WriteLine("We must close the application.");
-                Environment.Exit(0);
-            }
-            break;
-        }
-
-        while (true)
-        {
-            Console.WriteLine("\n Write your Birth Day (dd-mm-yyyy):");
-            
-            if (!DateTime.TryParse(Console.ReadLine(), out BirthDay))
-            {
-                Console.WriteLine("Please give a valid date.");
-                continue;
-            }
-            break;
-        }
-
-        while (true)
-        {
-            Console.WriteLine("\n Write your Mail:");
-            Mail = Console.ReadLine();
-            string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|gr|net|org|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum|eu)$";
-            if (string.IsNullOrWhiteSpace(Mail) || !Mail.Contains("@"))
-            
-              {
-                Console.WriteLine("Please give a valid email address.");
-                continue;
-            }
-
-            if (Regex.IsMatch(Mail, emailPattern))
-            {
-                Console.WriteLine(Mail);
-            }
-
-
-            break;
-
-
-        }
-
-        while (true)
-        {
-            Console.WriteLine("\n Write your ID:");
-            if (string.IsNullOrEmpty(ID)|| string.IsNullOrWhiteSpace(ID))
-            {
+                if (string.IsNullOrWhiteSpace(FirstName) || FirstName.Any(char.IsDigit) || FirstName.Any(char.IsSymbol) || FirstName.Any(char.IsNumber))
+                {
+                    Console.WriteLine("You have inserted invalid characters. Please give a valid Name.");
+                    continue;
+                }
                 break;
             }
-            Console.WriteLine("Please give a valid ID.");
-            continue;
-        }
 
-        var userRegistry = new Dictionary<string, object>
+            while (true)
+            {
+                Console.WriteLine("\n Write your Last Name:");
+                LastName = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(LastName) || LastName.Any(char.IsDigit) || LastName.Any(char.IsSymbol) || LastName.Any(char.IsNumber))
+                {
+                    Console.WriteLine("You have inserted invalid characters. Please give a valid Last Name.");
+                    continue;
+                }
+                break;
+            }
+
+            while (true)
+            {
+                Console.WriteLine("\n Write your Age:");
+                AgeOfuser = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(AgeOfuser) || !int.TryParse(AgeOfuser, out int age) || age < 0)
+                {
+                    Console.WriteLine("Please give a valid age.");
+                    continue;
+                }
+
+                if (age < 18)
+                {
+                    Console.WriteLine("You cannot register, because you are under age.");
+                    Console.WriteLine("We must close the application.");
+                    Environment.Exit(0);
+                }
+                break;
+            }
+
+            while (true)
+            {
+                Console.WriteLine("\n Write your Birth Day (dd-mm-yyyy):");
+
+                if (!DateTime.TryParse(Console.ReadLine(), out BirthDay))
+                {
+                    Console.WriteLine("Please give a valid date.");
+                    continue;
+                }
+                break;
+            }
+
+            while (true)
+            {
+                Console.WriteLine("\n Write your Mail:");
+                Mail = Console.ReadLine();
+                string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|gr|net|org|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum|eu)$";
+                if (string.IsNullOrWhiteSpace(Mail) || !Mail.Contains("@"))
+
+                {
+                    Console.WriteLine("Please give a valid email address.");
+                    continue;
+                }
+
+                if (Regex.IsMatch(Mail, emailPattern))
+                {
+                    Console.WriteLine(Mail);
+                }
+
+
+                break;
+
+
+            }
+
+            while (true)
+            {
+                Console.WriteLine("\n Write your ID:");
+                if (string.IsNullOrEmpty(ID) || string.IsNullOrWhiteSpace(ID))
+                {
+                    break;
+                }
+                Console.WriteLine("Please give a valid ID.");
+                continue;
+            }
+
+            var userRegistry = new Dictionary<string, object>
         {
             { "FirstName", FirstName },
             { "LastName", LastName },
@@ -153,20 +155,18 @@ public class UserAccount
             { "ID", ID }
         };
 
-        userAcounts.Add(userRegistry);
+            userAcounts.Add(userRegistry);
 
-        Console.WriteLine("\n Your registration is completed successfully.");
+            Console.WriteLine("\n Your registration is completed successfully.");
 
-        foreach (var user in userAcounts)
-        {
-            Console.WriteLine($"First Name: {user["FirstName"]}, Last Name: {user["LastName"]}, Age: {user["Age"]}, Birth Day: {user["BirthDay"]}, Mail: {user["Mail"]}, ID: {user["ID"]}");
+            foreach (var user in userAcounts)
+            {
+                Console.WriteLine($"First Name: {user["FirstName"]}, Last Name: {user["LastName"]}, Age: {user["Age"]}, Birth Day: {user["BirthDay"]}, Mail: {user["Mail"]}, ID: {user["ID"]}");
+            }
         }
     }
+
 }
-
-
-
-
 
 
 
