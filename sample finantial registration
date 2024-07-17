@@ -1,1 +1,153 @@
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
+namespace KinoGame
+{
+    public class FinancialRegistration
+    {
+        // List to store financial details
+        static List<Dictionary<string, object>> userBankAccounts = new List<Dictionary<string, object>>();
+
+        // Properties for financial details
+        public string Iban { get; set; }
+        public string PaypalAccount { get; set; }
+        public string GoogleAccount { get; set; }
+        public int CardNumber { get; set; }
+        public int CardCsv { get; set; }
+        public DateTime CardExpiration { get; set; }
+        public string BankName { get; set; }
+        public string BankBic { get; set; }
+
+        // Constructor to initialize financial details
+        public FinancialRegistration(string iban, string paypalAccount, string googleAccount, int cardNumber, int cardCsv, DateTime cardExpiration, string bankName, string bankBic)
+        {
+            this.Iban = iban;
+            this.PaypalAccount = paypalAccount;
+            this.GoogleAccount = googleAccount;
+            this.CardNumber = cardNumber;
+            this.CardCsv = cardCsv;
+            this.CardExpiration = cardExpiration;
+            this.BankName = bankName;
+            this.BankBic = bankBic;
+        }
+
+        // Method for bank registration process
+        public static void BankRegistration()
+        {
+            List<string> bankAccounts = new List<string>
+            {
+                "0. Εθνική Τράπεζα της Ελλάδος",
+                "1. Alpha Bank",
+                "2. Τράπεζα Πειραιώς",
+                "3. Eurobank",
+                "4. Attica Bank",
+                "5. Τράπεζα της Ελλάδος",
+                "6. Pancreta Bank",
+                "7. Άλλο"
+            };
+
+            Console.WriteLine("\nΠρέπει να συμπληρώσετε τα οικονομικά σας στοιχεία.\nΧρειάζεστε αυτές τις πληροφορίες για να παίξετε και να συλλέξετε κέρδη.");
+            Console.WriteLine("\nΕπιλέξτε την τράπεζά σας από τη λίστα:");
+
+            foreach (string bank in bankAccounts)
+            {
+                Console.WriteLine(bank);
+            }
+
+            int choice;
+            while (true)
+            {
+                Console.Write("\nΕισάγετε τον αριθμό της επιλογής σας: ");
+                if (int.TryParse(Console.ReadLine(), out choice) && choice >= 0 && choice < bankAccounts.Count)
+                {
+                    break;
+                }
+                Console.WriteLine("Μη έγκυρη επιλογή, προσπαθήστε ξανά.");
+            }
+
+            string selectedBank = bankAccounts[choice];
+            string bankBic = "";
+
+            if (choice == 7) // Άλλο
+            {
+                while (true)
+                {
+                    Console.Write("Εισάγετε το όνομα της τράπεζάς σας: ");
+                    selectedBank = Console.ReadLine().Trim();
+                    if (!string.IsNullOrEmpty(selectedBank) && Regex.IsMatch(selectedBank, @"^[a-zA-Z\s]+$"))
+                    {
+                        break;
+                    }
+                    Console.WriteLine("Μη έγκυρο όνομα τράπεζας, προσπαθήστε ξανά.");
+                }
+
+                while (true)
+                {
+                    Console.Write("Εισάγετε το BIC της τράπεζάς σας: ");
+                    bankBic = Console.ReadLine().Trim();
+                    if (!string.IsNullOrEmpty(bankBic) && Regex.IsMatch(bankBic, @"^[A-Za-z0-9]{8,11}$"))
+                    {
+                        break;
+                    }
+                    Console.WriteLine("Μη έγκυρος κωδικός BIC, προσπαθήστε ξανά.");
+                }
+            }
+
+            Console.WriteLine($"\nΕπιλέξατε την τράπεζα: {selectedBank}");
+            if (choice == 7)
+            {
+                Console.WriteLine($"Με κωδικό BIC: {bankBic}");
+            }
+
+            CardRegistration(selectedBank, bankBic);
+        }
+
+        // Method for card registration process
+        public static void CardRegistration(string bankName, string bankBic)
+        {
+            string cardNumber;
+            while (true)
+            {
+                Console.Write("Εισάγετε τον αριθμό της κάρτας σας (16 ψηφία): ");
+                cardNumber = Console.ReadLine().Trim();
+                if (Regex.IsMatch(cardNumber, @"^\d{16}$"))
+                {
+                    break;
+                }
+                Console.WriteLine("Μη έγκυρος αριθμός κάρτας, προσπαθήστε ξανά.");
+            }
+
+            DateTime cardExpiration;
+            while (true)
+            {
+                Console.Write("Εισάγετε την ημερομηνία λήξης της κάρτας σας (MM/YY): ");
+                string expirationInput = Console.ReadLine().Trim();
+                if (DateTime.TryParseExact(expirationInput, "MM/yy", null, System.Globalization.DateTimeStyles.None, out cardExpiration))
+                {
+                    break;
+                }
+                Console.WriteLine("Μη έγκυρη ημερομηνία λήξης, προσπαθήστε ξανά.");
+            }
+
+            string cardCsv;
+            while (true)
+            {
+                Console.Write("Εισάγετε τον 3-ψήφιο κωδικό CSV της κάρτας σας: ");
+                cardCsv = Console.ReadLine().Trim();
+                if (Regex.IsMatch(cardCsv, @"^\d{3}$"))
+                {
+                    break;
+                }
+                Console.WriteLine("Μη έγκυρος κωδικός CSV, προσπαθήστε ξανά.");
+            }
+
+            Console.WriteLine("Η εγγραφή σας ήταν επιτυχής.");
+        }
+
+        static void Main(string[] args)
+        {
+            BankRegistration();
+        }
+    }
+}
