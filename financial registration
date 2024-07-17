@@ -1,5 +1,9 @@
 using System;
+using System.Runtime.CompilerServices;
 using KinoGame;
+using System.Collections.Generic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.RegularExpressions;
 
 namespace KinoGame
 {
@@ -22,48 +26,162 @@ namespace KinoGame
 
         public string BankName { get; set; }
 
+        public string BankBic { get; set; }
 
-        public FinancialRegistration()
+        public FinancialRegistration(string iban, string paypalAcount, string googleAcount, int cardNumber, int cardCsv, DateTime cardExpiration, string BankName, string bankBic)
+
         {
+
+
+            this.iban = iban;
+            this.paypalAcount = paypalAcount;
+            this.googleAcount = googleAcount;
+            this.cardNumber = cardNumber;
+            this.cardCsv = cardCsv;
+            this.BankName = BankName;
+            this.BankBic = bankBic;
         }
-    }
-
-    //Οικονομικά Στοιχεία
-
-    //   Τρόπος Πληρωμής: Καθορίζει τον τρόπο με τον οποίο ο χρήστης θα πραγματοποιεί πληρωμές.
-    //τραπεζικη μεταφορα
-    //ηλεκτρονικο πορτοφολι
-    //μεσω καρτας
-    //paypal
-    //googlepay
-
-    //Τραπεζικός Λογαριασμός: Χρησιμοποιείται για την επαλήθευση και την πραγματοποίηση συναλλαγών.
 
 
 
-    //αποθηκευση στοιχειων σε λιστα
-
-    var userFinancialRegistry = new Dictionary<string, object>
+        public static void bankRegistration()
         {
-            { "FirstName", FirstName },
-            { "LastName", LastName },
-            { "Age", int.Parse(AgeOfuser) },
-            { "BirthDay", BirthDay },
-            { "Mail", Mail },
-            { "ID", ID }
-        };
+            List<string> bankAcounts = new List<string>
+            {
+            "0. Εθνική Τράπεζα της Ελλάδος",
+            "1. Alpha Bank",
+            "2. Τράπεζα Πειραιώς",
+            "3. Eurobank",
+            "4. Attica Bank",
+            "5. Τράπεζα της Ελλάδος",
+            "6. Pancreta Bank",
+            "7. Άλλο" };
 
 
-    //εκτυπωση
 
-    FinancialRegistration.Add(userFinancialRegistry);
+            foreach (string bank in bankAcounts)
+            {
+                Console.WriteLine(bank);
+            }
+            Console.WriteLine("\n You Should Fillfield your finantion acount. \n you need this profile details for playing and profit collections");
+            Console.WriteLine("\n Choose your bank from the list ");
+            Console.WriteLine("\n ");
+            var userInput = Console.ReadLine();
 
-Console.WriteLine("\n Your registration is completed successfully.");
 
-foreach (var user in userFinancialRegistry)
-{
-    Console.WriteLine($"First Name: {user["FirstName"]}, Last Name: {user["LastName"]}, 
-        Age: {user["Age"]}, Birth Day: {user["BirthDay"]}, Mail: {user["Mail"]}, ID: {user["ID"]}");
-}
+            for (int i = 0; i < bankAcounts.Count; i++)
+            {
+                while (true)
+                {
+                    if (userInput == "0")
+                    {
+                        Console.WriteLine($"{"Εθνική Τράπεζα της Ελλάδος"}");
+                        break;
+                    }
 
+                    if (userInput == "1" || userInput == "a" || userInput == "A")
+                    {
+                        Console.WriteLine($"{"Alpha Bank"}");
+                        break;
+                    }
+
+                    if (userInput == "2" || userInput == "B" || userInput == "b")
+                    {
+                        Console.WriteLine($"{"Τράπεζα Πειραιώς"}");
+                        break;
+                    }
+
+                    if (userInput == "3" || userInput == "c" || userInput == "C")
+                    {
+                        Console.WriteLine($"{"Eurobank"}");
+                        break;
+                    }
+
+                    if (userInput == "4" || userInput == "e" || userInput == "E")
+                    {
+                        Console.WriteLine($"{"Attica Bank"}");
+                        break;
+                    }
+
+                    if (userInput == "5" || userInput == "f" || userInput == "F")
+                    {
+                        Console.WriteLine($"{"Τράπεζα της Ελλάδος"}");
+                        break;
+                    }
+
+                    if (userInput == "6")
+                    {
+                        Console.WriteLine($"{"Pancreta Bank"}");
+                        break;
+                    }
+
+                    if (userInput == "7" || userInput == "G" || userInput == "g")
+                    {
+                        Console.WriteLine($"{"Άλλο"}");
+
+                        Console.WriteLine("\n write your Banks Name:");
+                        string usersInput1 = Console.ReadLine();
+                        Console.WriteLine("\n write your Banks bic:");
+                        string usersInput2 = Console.ReadLine();
+                        break;
+                    }
+                }
+            }
+        }
+
+        public static void cardRegistration()
+        {
+            Console.WriteLine();
+            Console.WriteLine("write your card numberr:");
+            string userInput1 = Console.ReadLine();
+            string cardPatern = @"\d +";
+            string input = "My card number is 1234 - 5678 - 9101";
+            Match cardNumber = Regex.Match(cardPatern, input);
+            for (int i = 0; i <= 16; i++)
+            {
+                int cardDigits = i;
+
+                for (int j = 0; j <= 16; j++)
+                {
+                    cardDigits = j;
+                    if (cardNumber.Length != cardNumber.Length)
+                    {
+                        Console.WriteLine(cardNumber);
+                        Console.WriteLine("insert the write digits");
+                        break;
+                    }
+
+
+                }
+            }
+
+
+            Console.WriteLine("write you cards expiration date:");
+            DateTime userInput2 =Convert.ToDateTime(Console.ReadLine());
+            for (int i = 0;  i<=6; i++)
+            {
+                if (userInput2 != DateTime.MaxValue)
+                {
+                    Console.WriteLine("wite the correct digits:");
+                    break;
+                }
+                continue;
+            }
+
+
+            Console.WriteLine("wite your 3 card digits:");
+            while (true)
+            {
+                for (int i = 0; i <= 3; i++)
+                {
+                    string userInput3 = Console.ReadLine();
+
+                }
+                break;
+            }
+            Console.WriteLine("your registration was succesful");
+        }
+
+        
+    }
 }
