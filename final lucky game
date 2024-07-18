@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 namespace KinoGame
 {
@@ -103,26 +104,26 @@ namespace KinoGame
 
 
 
-           List<int> list = new List<int>();
+            List<int> list = new List<int>();
             Random random = new Random();
             list.Add(random.Next());
 
             for (int i = 0; i < 10; i++)
             {
-               
+
                 int lotteryNumber = random.Next(1, 100);
-                if(list.Contains(lotteryNumber))
+                if (list.Contains(lotteryNumber))
                 {
                     random.Next();
                 }
                 Console.WriteLine(lotteryNumber);
 
             }
-           
 
-         }
 
-        
+        }
+
+
         public static void BonusLotteryDrawExecution()
 
         {
@@ -130,7 +131,7 @@ namespace KinoGame
 
 
 
-           List<int> list = new List<int>();
+            List<int> list = new List<int>();
             Random random = new Random();
             list.Add(random.Next());
 
@@ -151,15 +152,15 @@ namespace KinoGame
 
         public static void winningMessageClassicLottery()
         {
-            if(LotteryDrawExecution == NumbersInput)
+            if (LotteryDrawExecution == NumbersInput)
             {
                 Console.WriteLine("You won the classic lottery. You have maching numbers");
             }
-                if (LotteryDrawExecution != NumbersInput)
-                {
-                    Console.WriteLine("You didh't won the classic lottery. You don't  have maching numbers");
-                }
-            
+            if (LotteryDrawExecution != NumbersInput)
+            {
+                Console.WriteLine("You didh't won the classic lottery. You don't  have maching numbers");
+            }
+
         }
 
         public static void winningMessageBonusLottery()
@@ -169,17 +170,30 @@ namespace KinoGame
                 Console.WriteLine(" \n You won the Bonus lottery. You have maching numbers \n");
             }
 
-                if (BonusLottery != BonusLotteryDrawExecution)
-                {
+            if (BonusLottery != BonusLotteryDrawExecution)
+            {
                 Console.WriteLine("\n You didh't won the Bonus lottery. You don't  have maching numbers \n");
-                }
-            
+            }
+
         }
 
 
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            UserAccount.MessagesPersonalInformationInput();
+
+            UserAccount.PersonalInformationInput();
+
+            FinancialRegistration.bankRegistration();
+            FinancialRegistration.cardRegistration();
+            UserAccount.MessagesPersonalInformationInput();
+
+            UserAccount.PersonalInformationInput();
+
+
+            FinancialRegistration.cardRegistration();
+
             NumbersInput();
             BonusLottery();
 
@@ -189,8 +203,7 @@ namespace KinoGame
             winningMessageClassicLottery();
             winningMessageBonusLottery();
 
-            UserAccount.MessagesPersonalInformationInput();
-            UserAccount.PersonalInformationInput();
+
 
 
             Console.WriteLine("Press any key to exit.");
@@ -198,4 +211,5 @@ namespace KinoGame
         }
     }
 }
+
 
