@@ -1,9 +1,63 @@
 using System;
 
-public class AddFunds
+namespace KinoGame
 {
 
-    public AddFunds()
-	{
-	}
+
+
+    public class AddFunds
+    {
+
+
+
+        //Μια μέθοδος για την προσθήκη χρημάτων στον λογαριασμό του χρήστη.
+
+        //χρεωση καθε παιχνιδιου 0.10 ευρω καθοριζει το ποσο που θα παιξει 
+        //οριζει αν θελει το πληθος των παιχνιδιων που θελει να παιξει για να του πει ποσα χρηματα να βαλει
+
+
+        public double charge { get; set; };
+        public AddFunds(double charge)
+        {
+            this.charge = charge;
+        }
+    }
+
+
+
+    public class fundCollection
+    {
+
+
+
+        //Οι μέθοδοι του παιχνιδιού θα ενημερωθούν για να αφαιρούν το αντίστοιχο ποσό από το υπόλοιπο του χρήστη για κάθε συμμετοχή.
+        //καταθεση ποσου
+        public fundCollection()
+        {
+        }
+    }
+
+
+    public class fundCalculation
+    {
+        //υπολογισμος κερδων
+        //υπολογισμος απωλειων
+
+        public fundCalculation() { }
+    }
+}
+
+
+public class fundsManipulation
+{
+    //αναληψη ποσου
+    //χρεωση ποσου
+    public fundsManipulation() { }
+
+    public class fundsHistory
+    {
+
+        //ενημερωση ιστορικου
+        public fundsHistory() { }
+    }
 }
