@@ -1,4 +1,5 @@
 using System;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace KinoGame
 {
@@ -8,87 +9,62 @@ namespace KinoGame
     public class AddFunds
     {
 
-
-
+        
         //Μια μέθοδος για την προσθήκη χρημάτων στον λογαριασμό του χρήστη.
 
         //χρεωση καθε παιχνιδιου 0.10 ευρω καθοριζει το ποσο που θα παιξει 
         //οριζει αν θελει το πληθος των παιχνιδιων που θελει να παιξει για να του πει ποσα χρηματα να βαλει
 
 
-        public float charge { get; set; }
 
-        List<float> funds = new List<float>();
-
-        public float balance = 0;
-       
-
-        
-        public AddFunds(float charge, float balance)
-        {
-            this.charge = charge;
-            this.balance = balance;
-        }
-
-        public static void  addAfund(float balance) 
+        public static void AddAfund() 
                   
         {
+            
             Console.WriteLine("Write the amount for your game balance:");
-            float userInput = (float)Convert.ToDouble(Console.ReadKey());
 
-            while (true) 
+            string userInput;
+
+            userInput = Console.ReadLine();
+
+            if (!Decimal.TryParse(userInput, out decimal Amount))
             {
-                if(userInput > balance)
-                {
-                    balance++;
-                    break;
-                }
-                Console.WriteLine("you should give an amount bigger than 0.10 cent");
+            
+                Console.WriteLine("Write an amount biger than 10 cents:");
+            }
+            if (Decimal.TryParse(userInput, out Amount))
+            {
+                Console.WriteLine(Amount);
             }
         }
 
-        internal static void addAfund()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 
 
 
     public class fundCollection
     {
-
-
+      
 
         //Οι μέθοδοι του παιχνιδιού θα ενημερωθούν
         //για να αφαιρούν το αντίστοιχο ποσό από το υπόλοιπο του χρήστη για κάθε συμμετοχή.
         //καταθεση ποσου
-        public fundCollection()
+
+
+        public static void FundCollections() 
         {
+            int kinoUserInput = Program.NumbersInput();
+            int kinoExecution = Program.LotteryDrawExecution();
+
+
+            if (kinoUserInput == kinoExecution)
+            {
+                
+            }
+            
+
+                Console.WriteLine();
         }
     }
 
-
-    public class fundCalculation
-    {
-        //υπολογισμος κερδων
-        //υπολογισμος απωλειων
-
-        public fundCalculation() { }
-    }
-}
-
-
-public class fundsManipulation
-{
-    //αναληψη ποσου
-    //χρεωση ποσου
-    public fundsManipulation() { }
-
-    public class fundsHistory
-    {
-
-        //ενημερωση ιστορικου
-        public fundsHistory() { }
-    }
-}
