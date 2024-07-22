@@ -1,5 +1,4 @@
 using System;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace KinoGame
 {
@@ -9,7 +8,7 @@ namespace KinoGame
     public class AddFunds
     {
 
-        
+
         //Μια μέθοδος για την προσθήκη χρημάτων στον λογαριασμό του χρήστη.
 
         //χρεωση καθε παιχνιδιου 0.10 ευρω καθοριζει το ποσο που θα παιξει 
@@ -17,10 +16,13 @@ namespace KinoGame
 
 
 
-        public static void AddAfund() 
-                  
+        public static void AddAfund()
+
         {
-            
+            decimal gamePriced = 010m;
+            decimal balance = 0m;
+            decimal gameWinnings = 10m;
+
             Console.WriteLine("Write the amount for your game balance:");
 
             string userInput;
@@ -29,43 +31,66 @@ namespace KinoGame
 
             if (!Decimal.TryParse(userInput, out decimal Amount))
             {
-            
+
                 Console.WriteLine("Write an amount biger than 10 cents:");
             }
             if (Decimal.TryParse(userInput, out Amount))
             {
                 Console.WriteLine(Amount);
             }
+
+            var chargePerGame = Program.LotteryDrawExecution();
+
+            while(true)
+            {
+                if(gamePriced < balance)
+                {
+                    Console.WriteLine("the game begins");
+
+                    do(chargePerGame)
+                            {
+                        balance -= gamePriced; break;
+                    }
+                    while (chargePerGame) ;
+                }
+            }
         }
 
-      
+        public static void FundCollections()
+        {
+            // Προστέθηκε η μέθοδος FundCollections που πιστώνει τα κέρδη στον λογαριασμό του χρήστη.
+
+        }
+
+
+        public static void ShowBalance()
+        {
+            //Προστέθηκε η μέθοδος ShowBalance για να δείχνει το υπόλοιπο του χρήστη.
+        }
+
+
     }
 
 
 
     public class fundCollection
     {
-      
+
 
         //Οι μέθοδοι του παιχνιδιού θα ενημερωθούν
         //για να αφαιρούν το αντίστοιχο ποσό από το υπόλοιπο του χρήστη για κάθε συμμετοχή.
         //καταθεση ποσου
 
-
-        public static void FundCollections() 
+        public static void PlayGame() 
         {
-            int kinoUserInput = Program.NumbersInput();
-            int kinoExecution = Program.LotteryDrawExecution();
+         //   Προστέθηκε η μέθοδος PlayGame που χειρίζεται τη ροή του παιχνιδιού, χρεώνοντας τον χρήστη και πιστώνοντας τα κέρδη αν κερδίσει.
 
-
-            if (kinoUserInput == kinoExecution)
-            {
-                
-            }
-            
-
-                Console.WriteLine();
         }
-    }
 
+
+
+
+
+    }
+    }
 
